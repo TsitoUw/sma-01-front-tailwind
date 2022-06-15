@@ -58,7 +58,7 @@ function Register() {
       </div>
       <div className="connection w-full md:w-2/5 flex flex-col justify-center items-center px-0 md:px-8">
         <div className="card h-full md:h-auto">
-          <header className="bg-blue-500 rounded-none md:rounded-t-xl p-4">
+          <header className="bg-rose-500 rounded-none md:rounded-t-xl p-4">
             <h3 className="text-white text-center">Create an account</h3>
           </header>
           <form onSubmit={handleSubmit} className="flex flex-col p-2">
