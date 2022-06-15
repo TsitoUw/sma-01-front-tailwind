@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import CreatePost from "../post/CreatePost";
 import Post from "../post/Post";
 import { getUserInfo, fetchData } from "../../../shared/utiles";
-import Header from "../header/Header";
 import "./Home.css";
 import noPostSvg from "../../../assets/svg/undraw_post_re_mtr4.svg";
 import usePaginate from "../../../shared/usePaginate";

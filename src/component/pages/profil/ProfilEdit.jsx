@@ -1,9 +1,8 @@
 import React, { useEffect, useCallback, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { networkConfig } from "../../../shared/networkConfig";
-import { fetchData, getItems, getUserInfo, removeItems, setItems } from "../../../shared/utiles";
+import { fetchData, getUserInfo, removeItems, setItems } from "../../../shared/utiles";
 import { getUser } from "../../../shared/querry";
-import Header from "../header/Header";
 import defaultPfp from "../../../assets/default-avatar.jpg";
 import "./Profil.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -33,7 +32,7 @@ function ProfilEdit() {
     if (res.data._id !== currentUser._id) {
       navigate(-1);
     }
-    return res.data
+    return res.data;
   }, [id]);
 
   useEffect(() => {
@@ -70,9 +69,9 @@ function ProfilEdit() {
     if (res) {
       set_Src(null);
       const user = await getThisUser();
-      const info = JSON.stringify({_id: user._id, name: user.name, email: user.email, profilPicture: user.profilPicture})
+      const info = JSON.stringify({ _id: user._id, name: user.name, email: user.email, profilPicture: user.profilPicture });
       removeItems("info");
-      setItems("info", info)
+      setItems("info", info);
     }
     showToastInOut("Profil picture updated");
     setAddImageLoading(false);
@@ -234,7 +233,9 @@ function ProfilEdit() {
       </div>
       <div className="d-flex row gx-0 justify-content-center">
         <form className="content col-12 col-md-5" onSubmit={updateUser}>
-          <h5 className="pt-2 ps-2 m-0 text-muted"><FontAwesomeIcon icon="pencil" size="xs" className="mx-1"/> Edit your informations </h5>
+          <h5 className="pt-2 ps-2 m-0 text-muted">
+            <FontAwesomeIcon icon="pencil" size="xs" className="mx-1" /> Edit your informations{" "}
+          </h5>
           <div className="name pt-2">
             <div className="bg-dark p-2 mx-1" style={{ borderRadius: "4px" }}>
               <small className="p-0 m-0 px-2 text-muted">Name</small>
@@ -277,7 +278,9 @@ function ProfilEdit() {
             </button>
           </div>
           <div className="logout d-flex flex-column my-2" style={{ justifyContent: "space-between" }}>
-            <h5 className="pt-2 ps-2 m-0 text-muted"><FontAwesomeIcon icon="sign-out" size="xs" className="mx-1"/> Log out </h5>
+            <h5 className="pt-2 ps-2 m-0 text-muted">
+              <FontAwesomeIcon icon="sign-out" size="xs" className="mx-1" /> Log out{" "}
+            </h5>
             <button type="button" className="btn btn-danger mx-1 my-2 d-flex align-items-center justify-content-center" onClick={onLogout}>
               <FontAwesomeIcon icon="sign-out" className="mx-1" />
               Log out

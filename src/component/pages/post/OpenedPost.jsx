@@ -1,22 +1,18 @@
 import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useNavigate } from "react-router-dom";
 import { networkConfig } from "../../../shared/networkConfig";
 import { fetchData, getUserInfo, showToastInOut } from "../../../shared/utiles";
-import Header from "../header/Header";
 import "./Post.css";
 import noComments from "../../../assets/svg/undraw_public_discussion_re_w9up.svg";
-import defaultPfp from "../../../assets/default-avatar.jpg";
 import Comment from "./comment/Comment";
 import Toast from "../../toast/Toast";
 import CommentPost from "./comment/CommentPost";
 import Post from "./Post";
 import { SocketContext } from "../../../shared/socket.context";
-import { paginated } from "../../../shared/paginated";
 import usePaginate from "../../../shared/usePaginate";
 
 function OpenedPost() {
-  const socket = useContext(SocketContext)
+  const socket = useContext(SocketContext);
   const id = window.location.toString().split(networkConfig.front + "/post/")[1];
   const [post, setPost] = useState(null);
   const [limit, setLimit] = useState(8);
@@ -25,7 +21,7 @@ function OpenedPost() {
   const [showToast, setShowToast] = useState(false);
   const [toastBody, setToastBody] = useState("");
   const [isWriting, setIsWriting] = useState(false);
-  const [forcedUpdate, setForcedUpdate] = useState(0)
+  const [forcedUpdate, setForcedUpdate] = useState(0);
 
   if (!id || id.trim() === "") window.history.back();
 
@@ -37,11 +33,11 @@ function OpenedPost() {
     commentEndRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
-  useEffect(()=>{
-    socket.emit("join-post", id)
+  useEffect(() => {
+    socket.emit("join-post", id);
 
-    return () => socket.emit("leave-post", id)
-  },[])
+    return () => socket.emit("leave-post", id);
+  }, []);
 
   const observer = useRef();
   const lastCommentEltRef = useCallback(
@@ -73,7 +69,6 @@ function OpenedPost() {
     else {
       setPost(res.data);
     }
-    
   }, []);
 
   useEffect(() => {
@@ -82,7 +77,7 @@ function OpenedPost() {
   }, []);
 
   const commentPost = async (content) => {
-    console.log("eto")
+    console.log("eto");
     const url = `/posts/${id}/comments`;
     const token = getUserInfo().token;
     const userId = getUserInfo().user._id;
@@ -93,33 +88,33 @@ function OpenedPost() {
     const res = await fetchData(url, "POST", token, data);
     if (res.status !== 201) console.log("cannot comment");
     else {
-      setForcedUpdate(forcedUpdate + 1)
-      console.log(forcedUpdate)
+      setForcedUpdate(forcedUpdate + 1);
+      console.log(forcedUpdate);
     }
   };
 
   socket.on("is-writing", () => {
     setIsWriting(true);
-  })
+  });
 
-  socket.on("is-not-writing", ()=>{
-    setIsWriting(false)
-  })
+  socket.on("is-not-writing", () => {
+    setIsWriting(false);
+  });
 
-  const focused = (e) =>{
-    e.preventDefault()
+  const focused = (e) => {
+    e.preventDefault();
     socket.emit("writing", id);
-  }
+  };
 
   const blured = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     socket.emit("not-writing", id);
-  }
+  };
 
   return (
     <div className="openedPost">
       <Toast body={toastBody} show={showToast} />
-      
+
       <div className="d-flex justify-content-center">
         <div className="post col-12 col-md-5 d-flex flex-column bg-dark" style={{ borderBottomLeftRadius: "4px", borderBottomRightRadius: "4px" }}>
           {post && <Post post={post} />}
@@ -142,7 +137,11 @@ function OpenedPost() {
                   </div>
                 );
             })}
-            {isWriting && <div className="w-100 d-flex justify-content-center align-items-center pt-1">someone is writing <span className="mx-2 spinner-grow spinner-grow-sm text-muted"></span> </div>}
+            {isWriting && (
+              <div className="w-100 d-flex justify-content-center align-items-center pt-1">
+                someone is writing <span className="mx-2 spinner-grow spinner-grow-sm text-muted"></span>{" "}
+              </div>
+            )}
           </div>
         )}
         {loading && (

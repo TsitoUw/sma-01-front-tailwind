@@ -29,7 +29,7 @@ import {
   faCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import "./App.css";
-import Header from "./component/pages/header/Header";
+import { Layout } from "./component/layout/Layout";
 
 library.add(
   faEllipsis,
@@ -68,73 +68,25 @@ const MessageHome = lazy(() => import("./component/pages/message/MessageHome"));
 
 function App() {
   return (
-    <div className="App">
-      <SocketContext.Provider value={socket}>
-        <Router>
+    <SocketContext.Provider value={socket}>
+      <Router>
+        <Layout>
           <Suspense fallback={<LoaderLarger />}>
             <Routes>
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
-              <Route
-                path="/search"
-                element={
-                  <>
-                    <Header />
-                    <Search />
-                  </>
-                }
-              />
-              <Route
-                path="/messages"
-                element={
-                  <>
-                    <Header />
-                    <MessageHome />
-                  </>
-                }
-              />
-              <Route
-                path="/post/:id"
-                element={
-                  <>
-                    <Header />
-                    <OpenedPost />
-                  </>
-                }
-              />
-              <Route
-                path="/profil/:id/edit"
-                element={
-                  <>
-                    <Header />
-                    <ProfilEdit />
-                  </>
-                }
-              />
-              <Route
-                path="/profil/:id"
-                element={
-                  <>
-                    <Header />
-                    <Profil />
-                  </>
-                }
-              />
-              <Route
-                path="/"
-                element={
-                  <>
-                    <Header />
-                    <Home />
-                  </>
-                }
-              />
+              <Route path="/search" element={<Search />} />
+              <Route path="/messages" element={<MessageHome />} />
+              <Route path="/post/:id" element={<OpenedPost />} />
+              <Route path="/profil/:id/edit" element={<ProfilEdit />} />
+              <Route path="/profil/:id" element={<Profil />} />
+              <Route path="/" element={<Home />} />
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>
           </Suspense>
-        </Router>
-      </SocketContext.Provider>
-    </div>
+        </Layout>
+      </Router>
+    </SocketContext.Provider>
   );
 }
 

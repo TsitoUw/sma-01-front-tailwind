@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getUser, getUsersPosts } from "../../../shared/querry";
-import Header from "../header/Header";
+import { getUser } from "../../../shared/querry";
 import CreatePost from "../post/CreatePost";
 import { networkConfig } from "../../../shared/networkConfig";
 import { getUserInfo, fetchData, showToastInOut } from "../../../shared/utiles";
@@ -23,7 +22,7 @@ function Profil() {
   const [toastBody, setToastBody] = useState("");
 
   const currentUser = getUserInfo();
-  const { loading, error, hasMore, entities } = usePaginate(0,`users/${id}/posts`, page, limit);
+  const { loading, error, hasMore, entities } = usePaginate(0, `users/${id}/posts`, page, limit);
 
   const observer = useRef();
   const lastPostEltRef = useCallback(
@@ -102,7 +101,6 @@ function Profil() {
           </div>
           <div className="info-menu col-12 col-md-4 d-flex justify-content-center" style={{ alignItems: "flex-end" }}>
             <div className="menu d-flex p-2 justify-content-center">
-              
               {currentUser.user._id === user._id && (
                 <div className="edit-profil-btn w-100">
                   <button

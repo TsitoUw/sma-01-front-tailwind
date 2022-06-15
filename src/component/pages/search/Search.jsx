@@ -1,7 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import { fetchData, getUserInfo } from "../../../shared/utiles";
-import Header from "../header/Header";
 import Post from "../post/Post";
 import noPostSvg from "../../../assets/svg/undraw_absorbed_in_re_ymd6.svg";
 import defaultPfp from "../../../assets/default-avatar.jpg";
@@ -119,13 +118,14 @@ function Search() {
           <div className="col-12 col-md-5">
             <div className="post d-flex flex-column w-100">
               {posts.length > 0 && <p className="text-muted m-0 p-0 px-2 pt-2">Post</p>}
-              {posts.length > 0 && posts.map((post)=>{
-                return(
-                  <div key={post._id}>
-                    <Post post={post} />
-                  </div>
-                )
-              })}
+              {posts.length > 0 &&
+                posts.map((post) => {
+                  return (
+                    <div key={post._id}>
+                      <Post post={post} />
+                    </div>
+                  );
+                })}
             </div>
           </div>
         </div>
