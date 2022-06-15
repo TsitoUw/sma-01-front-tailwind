@@ -17,6 +17,8 @@ function Post({ post }) {
   const [postedAt, setPostedAt] = useState("");
   const [createdAt, setCreatedAt] = useState("");
   const [liked, setLiked] = useState(false);
+  const [likesCount, setLikesCount] = useState(0);
+  const [reload, setReload] = useState(2);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,28 +26,34 @@ function Post({ post }) {
     setContent(post.content);
     setPostedAt(comparedDate(post.createdAt));
     setCreatedAt(post.createdAt);
+    setLikesCount(post.likes.length);
 
     return () => clearInterval();
-  }, []);
+  }, [post]);
 
   useEffect(() => {
-    likeThis();
     getThisPost();
-  }, [liked]);
+  }, [reload]);
 
   const likeThis = async () => {
-    const data = { userId: currentUser._id };
-    const res = await fetchData(`/posts/${post.id}/like`, "PUT", getUserInfo().token, data);
-    console.log(res);
+    setLiked((l) => !l);
+    const id = getUserInfo().user._id;
+    const data = { userId: id };
+    const res = await fetchData(`/posts/${post._id}/like`, "PUT", getUserInfo().token, data);
+    setLikesCount((c) => (c = res.data.likes.length));
+    console.log(res.data.likes.length);
+    setReload((r) => r + 1);
   };
 
   const getThisPost = async () => {
-    const thisPost = await fetchData(`/posts/${post.id}`, "GET", getUserInfo().token);
+    const thisPost = await fetchData(`/posts/${post._id}`, "GET", getUserInfo().token);
     thisPost.data.likes.forEach((like) => {
+      console.log(like);
       if (getUserInfo().user._id === like) {
         setLiked(true);
       }
     });
+    setLikesCount(thisPost.data.likes.length);
     post = thisPost.data;
   };
 
@@ -202,12 +210,17 @@ function Post({ post }) {
           <div className="action d-flex flex-row px-1 pt-1" style={{ borderRadius: "4px" }}>
             <div className="w-100 d-flex" style={{ borderTop: "1px solid #666" }}>
               <div className="link w-100 me-1 mt-1">
-                <div className="btn btn-dark w-100" onClick={() => setLiked(!liked)}>
-                  <div className="d-flex align-items-center justify-content-center">
-                    <FontAwesomeIcon icon={"heart"} className="p-1" color={liked ? "red" : "white"} />{" "}
-                    {post.likes && post.likes.length > 0 && (
+                <div
+                  className="btn btn-dark w-100"
+                  onClick={() => {
+                    likeThis();
+                  }}
+                >
+                  <div className="text-slate-900">
+                    <FontAwesomeIcon icon={"heart"} className="p-1" color={liked ? "red" : ""} />{" "}
+                    {likesCount > 0 && (
                       <span className="mx-1" style={{ fontSize: "12px" }}>
-                        {post.likes.length}
+                        {likesCount}
                       </span>
                     )}
                   </div>

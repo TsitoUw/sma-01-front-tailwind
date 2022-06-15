@@ -24,8 +24,9 @@ function Header() {
 
   return (
     <nav className="sticky top-0 z-50 h-14 w-full flex justify-around items-center bg-white text-gray-900 centered-shadow">
-      <div className="">
+      <div className="relative">
         <NavLink
+          className="text-center"
           to="/"
           onClick={() => {
             if (path.split(networkConfig.front)[1] === "/") {
@@ -33,7 +34,10 @@ function Header() {
             }
           }}
         >
-          <FontAwesomeIcon icon="home" />
+          <FontAwesomeIcon icon="home" className="m-0" />
+          <div className="hidden dot absolute m-0 p-0 pt-1 text-xs top-4" style={{ left: "0.28rem" }}>
+            <FontAwesomeIcon icon="circle" size="xs" className="" />
+          </div>
         </NavLink>
       </div>
       <div className="">

@@ -88,7 +88,7 @@ function Register() {
             </div>
             <div className="flex rounded-sm h-10 my-2">
               <input
-                className="w-11/12 h-full bg-slate-600 p-2 text-white rounded-l-md"
+                className="w-11/12 h-full bg-slate-600 p-2 text-white text-sm rounded-l-md"
                 type={showPassword ? "text" : "password"}
                 placeholder="password"
                 value={password}

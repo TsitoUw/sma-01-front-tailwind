@@ -62,7 +62,7 @@ function Login() {
             </div>
             <div className="flex rounded-sm h-10 my-2">
               <input
-                className="w-11/12 h-full bg-slate-600 p-2 text-white rounded-l-md"
+                className="w-11/12 h-full bg-slate-600 p-2 text-white text-sm rounded-l-md"
                 type={showPassword ? "text" : "password"}
                 placeholder="password"
                 value={password}
@@ -80,7 +80,12 @@ function Login() {
                 <FontAwesomeIcon icon={showPassword ? "eye-slash" : "eye"} size="sm" />
               </div>
             </div>
-
+            <div className="flex rounded-sm h-10 my-2" onClick={() => setKeepLogged((k) => !k)}>
+              <div className=" w-full flex items-center h-full bg-slate-600 p-2 text-white rounded-md">
+                <input type="checkbox" checked={keepLogged} onChange={(e) => setKeepLogged(e.target.checked)} />
+                <p className="mx-1 text-sm text-slate-200">stay connected</p>
+              </div>
+            </div>
             <div className="my-2">
               <button type="submit" className="bg-sky-500 text-white flex justify-center items-center p-2 w-full rounded-md" disabled={isLoading}>
                 <FontAwesomeIcon icon="sign-in" className="mx-1" />
