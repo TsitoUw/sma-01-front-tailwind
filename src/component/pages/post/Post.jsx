@@ -115,7 +115,7 @@ function Post({ post }) {
     <div className="d-flex justify-content-center py-1" key={post._id}>
       <div className="post col-12 col-md-6 d-flex w-100 flex-column bg-dark" style={{ borderRadius: "4px" }}>
         <div className="head d-flex w-100 p-2">
-          <Link to={`/profil/${post.author._id}`} className="col-2 col-lg-1 d-flex align-items-center justify-content-center">
+          <Link to={`/profile/${post.author._id}`} className="col-2 col-lg-1 d-flex align-items-center justify-content-center">
             <img
               src={
                 post.author.profilPicture === undefined || post.author.profilPicture === "none"
@@ -133,9 +133,9 @@ function Post({ post }) {
             <div
               className="col-9 col-lg-10 d-flex flex-column justify-content-center"
               style={{ cursor: "pointer" }}
-              onClick={() => navigate(`/profil/${post.author._id}`)}
+              onClick={() => navigate(`/profile/${post.author._id}`)}
             >
-              <Link to={`/profil/${post.author._id}`}>
+              <Link to={`/profile/${post.author._id}`}>
                 <h6 className="m-0 px-1">{post.author.name}</h6>
               </Link>
               <small className="text-muted d-flex px-1" style={{ fontSize: "0.7rem" }}>

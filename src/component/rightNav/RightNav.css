@@ -1,0 +1,17 @@
+.right-nav .link a.active svg {
+  @apply text-rose-500;
+}
+
+.right-nav .link a.active p {
+  @apply text-slate-900;
+}
+
+.right-nav .link a.active {
+  -webkit-box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1), 0 0 0px rgba(0, 0, 0, 0.1) inset;
+  -moz-box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1), 0 0 0px rgba(0, 0, 0, 0.1) inset;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1), 0 0 0px rgba(0, 0, 0, 0.1) inset;
+}
+
+.right-nav .link a div {
+  @apply text-slate-400;
+}
