@@ -1,0 +1,40 @@
+.info{
+  justify-content: center;
+}
+
+.edit-profil-btn{
+  width: 100%;
+}
+
+.info .name{
+  text-align: center;
+}
+
+.pfp{
+  justify-content: center;
+}
+
+.info-menu .menu{
+  width: 100%;
+}
+
+@media screen and (min-width : 768px) {
+  .info{
+    justify-content: flex-start;
+  }
+  .edit-profil-btn{
+    width: auto;
+  }
+
+  .info .name{
+    text-align: start;
+  }
+
+  .pfp{
+    justify-content: flex-end;
+  }
+
+  .info-menu .menu{
+    width: auto;
+  }
+}

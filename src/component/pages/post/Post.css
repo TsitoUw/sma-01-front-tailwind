@@ -1,0 +1,36 @@
+.Post .link{
+  color: white;
+}
+
+.Post .link:hover{
+  color: white!important;
+  transform: scale(0.99);
+}
+
+.post-title{
+  word-wrap: break-word;
+  font-size: 15px;
+
+}
+
+.row{
+  --bs-gutter-x : 0!important;
+}
+
+.comment .comment-container {
+  width: 100%;
+  
+}
+
+.comment .comment-container .each{
+  width: 100%;
+  
+}
+
+@media screen and (min-width : 768px) {
+  .comment .comment-container {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

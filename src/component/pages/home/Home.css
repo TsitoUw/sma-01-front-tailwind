@@ -1,0 +1,31 @@
+.home .body {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.home .sidenav {
+  margin-top: 5px;
+  width: 20%;
+  height: 100%;
+  position: fixed;
+  border-radius: 4px;
+}
+
+.home .sidenav.left {
+  left: 0;
+}
+/* 
+.home .content {
+	margin: 5px;
+	width: 60%;
+} */
+
+/* @media screen and (max-width: 1080px) {
+	.home .sidenav{
+		display: none;
+	}
+	.home .content {
+		width: 100%;
+	}
+} */

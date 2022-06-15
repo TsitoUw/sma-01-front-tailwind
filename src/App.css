@@ -1,0 +1,18 @@
+.card {
+  @apply w-full bg-white shadow-md rounded-xl;
+  -webkit-box-shadow: 0 1px 10px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+  -moz-box-shadow: 0 1px 10px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+}
+
+h2 {
+  @apply text-4xl;
+}
+
+h3 {
+  @apply text-2xl;
+}
+
+input:focus {
+  @apply border-none outline-none shadow-none;
+}

@@ -1,0 +1,26 @@
+.register {
+  overflow-y: hidden;
+}
+
+.register .deco,
+.register .connection {
+  min-height: 100vh;
+}
+
+.input-container {
+  @apply rounded-sm h-10 my-2;
+}
+
+.log-input {
+  @apply w-full h-full bg-slate-600 p-2 text-white rounded-md;
+}
+
+.deco {
+  display: none;
+}
+
+@media screen and (min-width: 768px) {
+  .deco {
+    display: flex;
+  }
+}
