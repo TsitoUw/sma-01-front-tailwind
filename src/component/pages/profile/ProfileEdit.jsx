@@ -4,11 +4,11 @@ import { networkConfig } from "../../../shared/networkConfig";
 import { fetchData, getUserInfo, removeItems, setItems } from "../../../shared/utiles";
 import { getUser } from "../../../shared/querry";
 import defaultPfp from "../../../assets/default-avatar.jpg";
-import "./Profil.css";
+import "./Profile.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Toast from "../../toast/Toast";
 
-function ProfilEdit() {
+function ProfileEdit() {
   let id = getUserInfo().user._id;
   const [currentUser, setCurrentUser] = useState(getUserInfo().user);
   const navigate = useNavigate();
@@ -292,4 +292,4 @@ function ProfilEdit() {
   );
 }
 
-export default ProfilEdit;
+export default ProfileEdit;

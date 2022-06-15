@@ -60,10 +60,10 @@ library.add(
 const Home = lazy(() => import("./component/pages/home/Home"));
 const Login = lazy(() => import("./component/pages/login/Login"));
 const Search = lazy(() => import("./component/pages/search/Search"));
-const Profil = lazy(() => import("./component/pages/profil/Profil"));
+const Profile = lazy(() => import("./component/pages/profile/Profile"));
 const Register = lazy(() => import("./component/pages/register/Register"));
 const OpenedPost = lazy(() => import("./component/pages/post/OpenedPost"));
-const ProfilEdit = lazy(() => import("./component/pages/profil/ProfilEdit"));
+const ProfilEdit = lazy(() => import("./component/pages/profile/ProfileEdit"));
 const MessageHome = lazy(() => import("./component/pages/message/MessageHome"));
 
 function App() {
@@ -79,7 +79,7 @@ function App() {
               <Route path="/messages" element={<MessageHome />} />
               <Route path="/post/:id" element={<OpenedPost />} />
               <Route path="/profil/:id/edit" element={<ProfilEdit />} />
-              <Route path="/profil/:id" element={<Profil />} />
+              <Route path="/profile/:id" element={<Profile />} />
               <Route path="/" element={<Home />} />
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>

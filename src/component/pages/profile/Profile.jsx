@@ -7,12 +7,12 @@ import { getUserInfo, fetchData, showToastInOut } from "../../../shared/utiles";
 import defaultPfp from "../../../assets/default-avatar.jpg";
 import Post from "../post/Post";
 import noPostSvg from "../../../assets/svg/undraw_post_re_mtr4.svg";
-import "./Profil.css";
+import "./Profile.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import usePaginate from "../../../shared/usePaginate";
 import Toast from "../../toast/Toast";
 
-function Profil() {
+function Profile() {
   const id = window.location.toString().split(networkConfig.front + "/profil/")[1] || getUserInfo().user._id;
   const navigate = useNavigate();
   const [user, setUser] = useState({});
@@ -155,4 +155,4 @@ function Profil() {
   );
 }
 
-export default Profil;
+export default Profile;

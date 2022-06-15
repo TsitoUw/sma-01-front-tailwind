@@ -1,7 +1,0 @@
-a.active svg {
-  @apply text-rose-500;
-}
-
-a.active .dot {
-  @apply text-rose-500 block;
-}
