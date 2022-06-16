@@ -41,7 +41,7 @@ function RightNav() {
           <div className="flex justify-evenly items-center">
             <Link to="/notification" className="logo text-slate-400 flex flex-col justify-center items-center mx-1 ">
               <div className="flex justify-center items-center w-12 h-12  rounded-full p-2 bg-white border-2 border-slate-200">
-                <FontAwesomeIcon icon="bell" size="md" />
+                <FontAwesomeIcon icon="bell" size="sm" />
               </div>
               <p className="mt-2 text-sm opacity-50">notifications</p>
             </Link>
@@ -53,7 +53,7 @@ function RightNav() {
                   console.log("first");
                 }}
               >
-                <FontAwesomeIcon icon="sign-out" size="md" />
+                <FontAwesomeIcon icon="sign-out" size="sm" />
               </div>
               <p className="mt-2 text-sm opacity-50">logout</p>
               <PopupModal

@@ -70,21 +70,61 @@ function App() {
   return (
     <SocketContext.Provider value={socket}>
       <Router>
-        <Layout>
-          <Suspense fallback={<LoaderLarger />}>
-            <Routes>
-              <Route path="/register" element={<Register />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/search" element={<Search />} />
-              <Route path="/messages" element={<MessageHome />} />
-              <Route path="/post/:id" element={<OpenedPost />} />
-              <Route path="/profil/:id/edit" element={<ProfilEdit />} />
-              <Route path="/profile/:id" element={<Profile />} />
-              <Route path="/" element={<Home />} />
-              <Route path="*" element={<Navigate to="/" />} />
-            </Routes>
-          </Suspense>
-        </Layout>
+        <Suspense fallback={<LoaderLarger />}>
+          <Routes>
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route
+              path="/search"
+              element={
+                <Layout>
+                  <Search />
+                </Layout>
+              }
+            />
+            <Route
+              path="/messages"
+              element={
+                <Layout>
+                  <MessageHome />
+                </Layout>
+              }
+            />
+            <Route
+              path="/post/:id"
+              element={
+                <Layout>
+                  <OpenedPost />
+                </Layout>
+              }
+            />
+            <Route
+              path="/profil/:id/edit"
+              element={
+                <Layout>
+                  <ProfilEdit />
+                </Layout>
+              }
+            />
+            <Route
+              path="/profile/:id"
+              element={
+                <Layout>
+                  <Profile />
+                </Layout>
+              }
+            />
+            <Route
+              path="/"
+              element={
+                <Layout>
+                  <Home />
+                </Layout>
+              }
+            />
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
+        </Suspense>
       </Router>
     </SocketContext.Provider>
   );
