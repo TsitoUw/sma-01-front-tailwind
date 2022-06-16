@@ -112,10 +112,10 @@ function Post({ post }) {
   }, 60000);
 
   return (
-    <div className="d-flex justify-content-center py-1" key={post._id}>
-      <div className="post col-12 col-md-6 d-flex w-100 flex-column bg-dark" style={{ borderRadius: "4px" }}>
-        <div className="head d-flex w-100 p-2">
-          <Link to={`/profile/${post.author._id}`} className="col-2 col-lg-1 d-flex align-items-center justify-content-center">
+    <div className="post p-3" key={post._id}>
+      <div className="bg-white flex flex-col p-2 rounded-lg">
+        <div className="head flex w-100">
+          <Link to={`/profile/${post.author._id}`} className="w-2/12 flex justify-center items-center p-2">
             <img
               src={
                 post.author.profilPicture === undefined || post.author.profilPicture === "none"
@@ -123,124 +123,113 @@ function Post({ post }) {
                   : networkConfig.static + "/users/" + post.author._id + "/" + post.author.profilPicture
               }
               alt=""
-              className="p-2"
+              className="aspect-square object-contain rounded-full flex-none"
               width="45px"
               height="45px"
-              style={{ borderRadius: "50%", width: "45px", height: "45px", objectFit: "cover" }}
             />
           </Link>
-          {!openedOption && (
-            <div
-              className="col-9 col-lg-10 d-flex flex-column justify-content-center"
-              style={{ cursor: "pointer" }}
-              onClick={() => navigate(`/profile/${post.author._id}`)}
-            >
-              <Link to={`/profile/${post.author._id}`}>
-                <h6 className="m-0 px-1">{post.author.name}</h6>
-              </Link>
-              <small className="text-muted d-flex px-1" style={{ fontSize: "0.7rem" }}>
-                {postedAt}
-              </small>
+          <div
+            className="w-9/12 mx-2 md:mx-0 flex flex-col justify-start pt-1"
+            style={{ cursor: "pointer" }}
+            onClick={() => navigate(`/profile/${post.author._id}`)}
+          >
+            <Link to={`/profile/${post.author._id}`}>
+              <h6 className="font-semibold">{post.author.name}</h6>
+            </Link>
+            <small className="font-light text-xs text-slate-400">{postedAt}</small>
+          </div>
+
+          {/* {openedOption && (
+          <div
+            className=""
+            style={{ postion: "absolute", borderRadius: "8px", boxShadow: "0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%)" }}
+          >
+            <div className="edit mx-2 small" style={{ cursor: "pointer" }}>
+              <FontAwesomeIcon icon="bookmark" size="sm" /> Save post
             </div>
-          )}
-          {openedOption && (
-            <div
-              className="col-9 col-lg-10 d-flex justify-content-center mx-1 align-items-center bg-dark"
-              style={{ postion: "absolute", borderRadius: "8px", boxShadow: "0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%)" }}
-            >
-              <div className="edit mx-2 small" style={{ cursor: "pointer" }}>
-                <FontAwesomeIcon icon="bookmark" size="sm" /> Save post
+            {post.author._id === currentUser._id && (
+              <div className="edit mx-2 small" onClick={deletePost} style={{ cursor: "pointer" }}>
+                <FontAwesomeIcon icon="trash" size="sm" /> Delete
               </div>
-              {post.author._id === currentUser._id && (
-                <div className="edit mx-2 small" onClick={deletePost} style={{ cursor: "pointer" }}>
-                  <FontAwesomeIcon icon="trash" size="sm" /> Delete
-                </div>
-              )}
-              {post.author._id === currentUser._id && (
-                <div
-                  className="edit mx-2 small"
-                  onClick={() => {
-                    setIsEditing(!isEditing);
-                    setOpenedOption(!openedOption);
-                  }}
-                  style={{ cursor: "pointer" }}
-                >
-                  <FontAwesomeIcon icon="pencil" size="sm" /> Edit
-                </div>
-              )}
-            </div>
-          )}
-          <div className="col-1 justify-content-center" style={{ position: "relative", display: "inline-block" }}>
-            <FontAwesomeIcon icon={"ellipsis"} className="pt-3" onClick={() => setOpenedOption(!openedOption)} />
+            )}
+            {post.author._id === currentUser._id && (
+              <div
+                className="edit mx-2 small"
+                onClick={() => {
+                  setIsEditing(!isEditing);
+                  setOpenedOption(!openedOption);
+                }}
+                style={{ cursor: "pointer" }}
+              >
+                <FontAwesomeIcon icon="pencil" size="sm" /> Edit
+              </div>
+            )}
+          </div>
+        )} */}
+          <div className="w-1/12 flex justify-center">
+            <FontAwesomeIcon icon={"ellipsis"} className="pt-2" onClick={() => setOpenedOption(!openedOption)} />
           </div>
         </div>
         {!isEditing && (
-          <Link to={`/post/${post._id}`} className="p-2 d-flex" style={{ flexWrap: "wrap", textOverflow: "clip" }}>
-            <div className="post-content m-0 px-2" style={{ maxWidth: "100%", whiteSpace: "pre-wrap", color: "white" }}>
+          <Link to={`/post/${post._id}`} className="text-slate-900">
+            <div className="" style={{ maxWidth: "100%", whiteSpace: "pre-wrap" }}>
               {post.content}
             </div>
           </Link>
         )}
-        {isEditing && (
-          <form onSubmit={editPost} className="px-1">
-            <textarea
-              className="w-100 form-control border-0 bg-dark"
-              cols="10"
-              rows="2"
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              style={{ backgroundColor: "#323232", color: "white", border: "solid 1px #222222", resize: "none" }}
-            />
-            <div className="px-1 py-1 d-flex" style={{ borderTop: "1px solid #666" }}>
-              <button className="btn btn-primary btn w-50 mx-1 mt-1" type="submit">
+        {/* {isEditing && (
+          <form onSubmit={editPost} className="">
+            <textarea className="" cols="10" rows="2" value={content} onChange={(e) => setContent(e.target.value)} style={{ resize: "none" }} />
+            <div className="">
+              <button className="" type="submit">
                 Save
               </button>
-              <button className="btn btn-secondary btn w-50 mx-1 mt-1" type="button" onClick={() => setIsEditing(!isEditing)}>
+              <button className="" type="button" onClick={() => setIsEditing(!isEditing)}>
                 Cancel
               </button>
             </div>
           </form>
-        )}
+        )} */}
         {(post.picture === undefined || post.picture !== "none") && (
-          <Link to={`/post/${post._id}`} className="images pb-2">
+          <Link to={`/post/${post._id}`} className="images">
             <img src={networkConfig.static + "/posts/" + post._id + "/" + post.picture} alt="post" style={{ width: "100%", objectFit: "contain" }} />
           </Link>
         )}
-        {!isEditing && (
-          <div className="action d-flex flex-row px-1 pt-1" style={{ borderRadius: "4px" }}>
-            <div className="w-100 d-flex" style={{ borderTop: "1px solid #666" }}>
-              <div className="link w-100 me-1 mt-1">
-                <div
-                  className="btn btn-dark w-100"
-                  onClick={() => {
-                    likeThis();
-                  }}
-                >
-                  <div className="text-slate-900">
-                    <FontAwesomeIcon icon={"heart"} className="p-1" color={liked ? "red" : ""} />{" "}
-                    {likesCount > 0 && (
-                      <span className="mx-1" style={{ fontSize: "12px" }}>
-                        {likesCount}
-                      </span>
-                    )}
-                  </div>
+        {/* {!isEditing && (
+        <div className="">
+          <div className="w-100 d-flex" style={{ borderTop: "1px solid #666" }}>
+            <div className="link w-100 me-1 mt-1">
+              <div
+                className="btn btn-dark w-100"
+                onClick={() => {
+                  likeThis();
+                }}
+              >
+                <div className="text-slate-900">
+                  <FontAwesomeIcon icon={"heart"} className="p-1" color={liked ? "red" : ""} />{" "}
+                  {likesCount > 0 && (
+                    <span className="mx-1" style={{ fontSize: "12px" }}>
+                      {likesCount}
+                    </span>
+                  )}
                 </div>
               </div>
-              <Link className="link w-100 mt-1" to={`/post/${post._id}`}>
-                <div className="btn btn-dark w-100">
-                  <div className="d-flex align-items-center justify-content-center">
-                    <FontAwesomeIcon icon={"comment"} className="p-1" />{" "}
-                    {post.comments && post.comments.length > 0 && (
-                      <span className="p-0 m-0 mx-1" style={{ fontSize: "12px" }}>
-                        {post.comments.length}
-                      </span>
-                    )}
-                  </div>
-                </div>
-              </Link>
             </div>
+            <Link className="link w-100 mt-1" to={`/post/${post._id}`}>
+              <div className="btn btn-dark w-100">
+                <div className="d-flex align-items-center justify-content-center">
+                  <FontAwesomeIcon icon={"comment"} className="p-1" />{" "}
+                  {post.comments && post.comments.length > 0 && (
+                    <span className="p-0 m-0 mx-1" style={{ fontSize: "12px" }}>
+                      {post.comments.length}
+                    </span>
+                  )}
+                </div>
+              </div>
+            </Link>
           </div>
-        )}
+        </div>
+      )} */}
       </div>
     </div>
   );
