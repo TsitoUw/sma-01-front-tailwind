@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import { fetchData, getUserInfo } from "../../../shared/utiles";
 import Post from "../post/Post";
-import noPostSvg from "../../../assets/svg/undraw_absorbed_in_re_ymd6.svg";
+import noPostSvg from "../../../assets/svg/undraw_searching.svg";
 import defaultPfp from "../../../assets/default-avatar.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import { networkConfig } from "../../../shared/networkConfig";
@@ -49,47 +49,45 @@ function Search() {
   return (
     <div className="search">
       <SearchInput onSearch={onSearch} setText={setText} text={text} />
-      <div className="d-flex justify-content-center row">
-        <div className="col-12 col-md-5">
-          <div className="post d-flex flex-column w-100">
-            {users.length > 0 && <p className="text-muted m-0 p-0 px-2 pt-2">People</p>}
+      {/* <div className="flex justify-center">
+        <div className="post d-flex flex-column w-100">
+          {users.length > 0 && <p className="text-muted m-0 p-0 px-2 pt-2">People</p>}
 
-            {users.length > 0 &&
-              users.map((user) => {
-                return (
-                  <div className="d-flex justify-content-center pt-2 mx-1" key={user._id}>
-                    <div className="post col-12 col-md-6 d-flex w-100 flex-column bg-dark" style={{ borderRadius: "4px" }}>
-                      <div className="head d-flex w-100 p-2">
-                        <Link to={`/profil/${user._id}`} className="col-2 col-lg-1 d-flex align-items-center justify-content-center">
-                          <img
-                            src={
-                              !user.profilPicture || user.profilPicture === "none"
-                                ? defaultPfp
-                                : networkConfig.static + "/users/" + user._id + "/" + user.profilPicture
-                            }
-                            alt=""
-                            className="p-2"
-                            style={{ borderRadius: "50%", width: "55px", height: "55px", objectFit: "cover" }}
-                          />
+          {users.length > 0 &&
+            users.map((user) => {
+              return (
+                <div className="d-flex justify-content-center pt-2 mx-1" key={user._id}>
+                  <div className="post col-12 col-md-6 d-flex w-100 flex-column bg-dark" style={{ borderRadius: "4px" }}>
+                    <div className="head d-flex w-100 p-2">
+                      <Link to={`/profil/${user._id}`} className="col-2 col-lg-1 d-flex align-items-center justify-content-center">
+                        <img
+                          src={
+                            !user.profilPicture || user.profilPicture === "none"
+                              ? defaultPfp
+                              : networkConfig.static + "/users/" + user._id + "/" + user.profilPicture
+                          }
+                          alt=""
+                          className="p-2"
+                          style={{ borderRadius: "50%", width: "55px", height: "55px", objectFit: "cover" }}
+                        />
+                      </Link>
+                      <div
+                        className="col-9 col-lg-10 d-flex flex-column justify-content-center"
+                        style={{ cursor: "pointer" }}
+                        onClick={() => navigate(`/profil/${user._id}`)}
+                      >
+                        <Link to={`/profil/${user._id}`}>
+                          <h6 className="m-0 px-1">{user.name}</h6>
                         </Link>
-                        <div
-                          className="col-9 col-lg-10 d-flex flex-column justify-content-center"
-                          style={{ cursor: "pointer" }}
-                          onClick={() => navigate(`/profil/${user._id}`)}
-                        >
-                          <Link to={`/profil/${user._id}`}>
-                            <h6 className="m-0 px-1">{user.name}</h6>
-                          </Link>
-                        </div>
-                        <div className="col-1 d-flex justify-content-center">
-                          <FontAwesomeIcon icon={"cloud"} className="pt-3" />
-                        </div>
+                      </div>
+                      <div className="col-1 d-flex justify-content-center">
+                        <FontAwesomeIcon icon={"cloud"} className="pt-3" />
                       </div>
                     </div>
                   </div>
-                );
-              })}
-          </div>
+                </div>
+              );
+            })}
         </div>
       </div>
       <div className="d-flex justify-content-center row">
@@ -106,16 +104,14 @@ function Search() {
               })}
           </div>
         </div>
-      </div>
-      <div className="d-flex justify-content-center row">
-        <div className="col-12 col-md-5">
-          <div className="post d-flex flex-column w-100">
-            {postsLength < 1 && usersLength < 1 && !isSearching && (
-              <div className="d-flex justify-content-center">
-                <img src={noPostSvg} alt="" width="350px" className="p-5" />
-              </div>
-            )}
-          </div>
+      </div> */}
+      <div className="flex justify-center">
+        <div className="post flex flex-column w-100">
+          {postsLength < 1 && usersLength < 1 && !isSearching && (
+            <div className="flex justify-center">
+              <img src={noPostSvg} alt="" width="350px" className="p-20" />
+            </div>
+          )}
         </div>
       </div>
 
