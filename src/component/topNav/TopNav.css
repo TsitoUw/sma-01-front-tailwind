@@ -1,0 +1,15 @@
+.top-nav .link a.active svg {
+  @apply text-rose-500;
+}
+
+.top-nav .link a.active p {
+  @apply text-slate-900;
+}
+
+.top-nav .link a.active {
+  @apply rounded-xl;
+}
+
+.top-nav .link a div {
+  @apply text-slate-400;
+}
