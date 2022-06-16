@@ -64,20 +64,15 @@ function Home() {
   };
 
   return (
-    <div className="home">
+    <div className="home px-0 md:px-4">
       <Toast body={toastBody} show={showToast} />
-      <div className="body d-flex flex-row row">
-        {/* <div className="sidenav left bg-dark">
-					left
-				</div> */}
-        <div className="content col-12 col-md-5">
-          <div className="container-fluid">
-            <CreatePost onCreatePost={handleCreatePost} placeHolder={"What's on your mind?"} />
-          </div>
-          <div className="post container-fluid d-flex flex-column">
+      <div className="bodyw">
+        <div className="content ">
+          <CreatePost onCreatePost={handleCreatePost} placeHolder={"Write something to create a post"} />
+          <div className="post ">
             {entities.length < 1 && !loading && (
-              <div className="d-flex justify-content-center">
-                <img src={noPostSvg} alt="" width="350px" className="p-5" />
+              <div className="flex justify-center items-center">
+                <img src={noPostSvg} alt="" width="350px" className="p-20" />
               </div>
             )}
             {entities.length > 0 &&
@@ -96,7 +91,7 @@ function Home() {
                   );
               })}
             {loading && (
-              <div className="p-3 d-flex justify-content-center">
+              <div className="">
                 <div className="spinner-grow sprinner-grow-sm text-muted"></div>
               </div>
             )}

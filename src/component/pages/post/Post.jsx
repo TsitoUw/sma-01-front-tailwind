@@ -112,7 +112,7 @@ function Post({ post }) {
   }, 60000);
 
   return (
-    <div className="post p-3" key={post._id}>
+    <div className="post px-2 py-1" key={post._id}>
       <div className="bg-white flex flex-col p-2 rounded-lg">
         <div className="head flex w-100">
           <Link to={`/profile/${post.author._id}`} className="w-2/12 flex justify-center items-center p-2">
@@ -123,13 +123,13 @@ function Post({ post }) {
                   : networkConfig.static + "/users/" + post.author._id + "/" + post.author.profilPicture
               }
               alt=""
-              className="aspect-square object-contain rounded-full flex-none"
+              className="aspect-square object-cover rounded-full flex-none"
               width="45px"
               height="45px"
             />
           </Link>
           <div
-            className="w-9/12 mx-2 md:mx-0 flex flex-col justify-start pt-1"
+            className="w-9/12 mx-2 md:mx-0 flex flex-col justify-start"
             style={{ cursor: "pointer" }}
             onClick={() => navigate(`/profile/${post.author._id}`)}
           >
@@ -191,8 +191,8 @@ function Post({ post }) {
           </form>
         )} */}
         {(post.picture === undefined || post.picture !== "none") && (
-          <Link to={`/post/${post._id}`} className="images">
-            <img src={networkConfig.static + "/posts/" + post._id + "/" + post.picture} alt="post" style={{ width: "100%", objectFit: "contain" }} />
+          <Link to={`/post/${post._id}`} className="images object-contain">
+            <img src={networkConfig.static + "/posts/" + post._id + "/" + post.picture} alt="post" />
           </Link>
         )}
         {/* {!isEditing && (

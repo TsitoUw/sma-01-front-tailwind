@@ -19,6 +19,7 @@ h3 {
   @apply text-2xl;
 }
 
-input:focus {
+input:focus,
+textarea:focus {
   @apply border-none outline-none shadow-none;
 }

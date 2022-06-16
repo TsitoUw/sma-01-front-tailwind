@@ -6,12 +6,10 @@ import { networkConfig } from "../../shared/networkConfig";
 import "./RightNav.css";
 import defaultPfp from "../../assets/default-avatar.jpg";
 import { SearchInput } from "../pages/search/SearchInput";
-import { PopupModal } from "../modal/PopupModal";
+import { ConfirmCancel } from "../modal/ConfirmCancel";
 
 function RightNav() {
   const navigate = useNavigate();
-  const currentUser = getUserInfo().user;
-  const path = window.location.href;
   const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   const isLogged = () => {
@@ -56,11 +54,11 @@ function RightNav() {
                 <FontAwesomeIcon icon="sign-out" size="sm" />
               </div>
               <p className="mt-2 text-sm opacity-50">logout</p>
-              <PopupModal
+              <ConfirmCancel
                 header="Do you really want to log out ?"
                 onShowModal={showLogoutModal}
                 onCloseModal={setShowLogoutModal}
-                onLogout={onLogout}
+                onConfirm={onLogout}
               />
             </div>
           </div>

@@ -96,75 +96,87 @@ function CreatePost({ onCreatePost, placeHolder }) {
   };
 
   return (
-    <div
-      className="bg-dark mb-1"
-      style={{ borderBottomLeftRadius: "4px", borderBottomRightRadius: "4px" }}
-      onBlur={() => setFocused(false)}
-      onClick={() => setFocused(true)}
-    >
+    <div className="bg-white rounded-b-xl">
       <Toast body={toastBody} show={showToast} />
-      <form className="d-flex flex-column p-2" onSubmit={handleCreatePost}>
-        <div className="m-1 row">
-          <div className="col-2 col-xl-1 d-flex justify-content-center" style={{ alignItems: "self-start" }}>
-            <img
-              src={
-                getUserInfo().user.profilPicture === "none" || !getUserInfo().user.profilPicture
-                  ? defaultPfp
-                  : networkConfig.static + "/users/" + getUserInfo().user._id + "/" + getUserInfo().user.profilPicture
-              }
-              alt=""
-              className="p-2"
-              style={{ borderRadius: "50%", width: "45px", height: "45px", objectFit: "cover" }}
-            />
-          </div>
-          <div className="col-10 col-xl-11">
-            <textarea
-              className="w-100 form-control"
-              placeholder={placeHolder}
-              cols="10"
-              rows="2"
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              style={{ backgroundColor: "#323232", color: "white", border: "solid 1px #222222", resize: "none" }}
-            />
-          </div>
-          <input type="file" accept=".jpeg,.jpg,.png" ref={fileInputRef} name="profile-picture" className="d-none" onChange={handlePhotoFileChange} />
-        </div>
-        <div className="m-1 row">
-          <div className="col-2 col-xl-1"></div>
-          <div className="col-10 col-xl-11 row gx-0 p-0 m-0 align-items-center">
-            <div className="col-1 d-flex justify-content-center p-1">
-              <button type="button" className="btn text-white m-0 p-0" onClick={() => fileInputRef.current.click()}>
-                <FontAwesomeIcon icon={"camera"} />
-              </button>
-            </div>
-            <div className="col-11">
-              <p className="m-0 p-0 w-100 text-muted" style={{ cursor: "pointer" }} onClick={() => fileInputRef.current.click()}>
-                Photo
-              </p>
-            </div>
-          </div>
-          <button className="btn btn-primary w-100" type="submit" disabled={content === "" || content.trim() === "" ? true : false}>
-            Post
-          </button>
-          {_src && (
-            <div className="w-100 pt-2 d-flex" style={{ position: "relative" }}>
-              <img src={_src} alt="" style={{ width: "100%", height: "auto", objectFit: "cover", opacity: "40%", borderRadius: "2%" }} />
-              {addImageLoading && <div style={{ position: "absolute", left: "50%", top: "50%" }} className="spinner-grow sprinner-grow-sm"></div>}
-              <FontAwesomeIcon
-                icon="cancel"
-                className="m-2"
-                style={{ position: "absolute", cursor: "pointer" }}
-                onClick={() => {
-                  fileInputRef.current.value = "";
-                  set_Src(null);
-                  setUploadFile(null);
-                }}
+      <form className="flex flex-col items-center" onSubmit={handleCreatePost}>
+        <div className="flex items-center w-full">
+          <div className="flex w-10/12">
+            <div className="aspect-square rounded-full w-2/12 flex justify-center items-center">
+              <img
+                src={
+                  getUserInfo().user.profilPicture === "none" || !getUserInfo().user.profilPicture
+                    ? defaultPfp
+                    : networkConfig.static + "/users/" + getUserInfo().user._id + "/" + getUserInfo().user.profilPicture
+                }
+                alt=""
+                className="p-2 w-14"
+                style={{ objectFit: "cover" }}
               />
+            </div>
+            <div className="flex justify-center items-center w-10/12">
+              <div className="w-full flex items-center">
+                <textarea
+                  onBlur={() => setFocused(false)}
+                  onClick={() => setFocused(true)}
+                  className="bg-slate-100 w-full p-2 rounded-xl resize-none my-2"
+                  placeholder={placeHolder}
+                  value={content}
+                  rows={focused ? "4" : "1"}
+                  type="text"
+                  onChange={(e) => setContent(e.target.value)}
+                />
+              </div>
+            </div>
+            <input
+              type="file"
+              accept=".jpeg,.jpg,.png"
+              ref={fileInputRef}
+              name="profile-picture"
+              className="hidden"
+              onChange={handlePhotoFileChange}
+            />
+          </div>
+          {content === "" || content.trim() === "" ? (
+            <div className="w-2/12 flex flex-col justify-center">
+              <div className="flex justify-center">
+                <button type="button" className="text-slate-800" onClick={() => fileInputRef.current.click()}>
+                  <FontAwesomeIcon icon={"images"} />
+                </button>
+              </div>
+              <div className="flex justify-center">
+                <p className="text-xs" style={{ cursor: "pointer" }} onClick={() => fileInputRef.current.click()}>
+                  Photo
+                </p>
+              </div>
+            </div>
+          ) : (
+            <div className="w-2/12 flex justify-centera items-center">
+              <button
+                className="mx-2 w-full h-9 rounded-xl flex items-center justify-center text-blue-500 hover:text-white border-blue-400 border active:bg-blue-500 hover:bg-blue-500"
+                type="submit"
+                disabled={content === "" || content.trim() === "" ? true : false}
+              >
+                Post
+              </button>
             </div>
           )}
         </div>
       </form>
+      {_src && (
+        <div className="object-cover opacity-40 relative text-slate-100">
+          <img src={_src} alt="post" className="rounded-xl" />
+          <FontAwesomeIcon
+            icon="cancel"
+            className="m-2 absolute top-0"
+            style={{ cursor: "pointer" }}
+            onClick={() => {
+              fileInputRef.current.value = "";
+              set_Src(null);
+              setUploadFile(null);
+            }}
+          />
+        </div>
+      )}
     </div>
   );
 }

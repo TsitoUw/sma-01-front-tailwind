@@ -80,8 +80,8 @@ function LeftNav() {
           <div className="about flex flex-col">
             <NavLink to={`/profile/${currentUser._id}`} className="my-1">
               <div className="mx-2 md:mx-6 content flex items-center md:justify-start justify-center p-3">
-                <div className="picture aspect-square w-5 h-5 md:w-7 md:h-7">
-                  <img src={defaultPfp} alt={`${currentUser.name} profile`} srcset="" />
+                <div className="picture rounded-full aspect-square w-5 h-5 md:w-7 md:h-7">
+                  <img src={defaultPfp} alt={`${currentUser.name} profile`} />
                 </div>
                 <div className="flex-col flex-none hidden md:flex">
                   <p className="mx-3 font-bold w-16 md:w-18 lg:w-28 text-ellipsis overflow-hidden">{currentUser.name}</p>

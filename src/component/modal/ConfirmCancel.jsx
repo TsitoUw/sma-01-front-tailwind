@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 
-export const PopupModal = ({ header, onCloseModal, onLogout, onShowModal = false }) => {
+export const ConfirmCancel = ({ header, onCloseModal, onConfirm, onShowModal = false }) => {
   const [showModal, setShowModal] = useState(onShowModal);
   useEffect(() => {
     setShowModal(onShowModal);
@@ -41,7 +41,7 @@ export const PopupModal = ({ header, onCloseModal, onLogout, onShowModal = false
                     type="button"
                     onClick={() => {
                       setShowModal(false);
-                      onLogout();
+                      onConfirm();
                     }}
                   >
                     Yes

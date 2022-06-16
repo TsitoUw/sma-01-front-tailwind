@@ -27,6 +27,7 @@ import {
   faEyeSlash,
   faCircleNotch,
   faCircle,
+  faImages,
 } from "@fortawesome/free-solid-svg-icons";
 import "./App.css";
 import { Layout } from "./component/layout/Layout";
@@ -54,7 +55,8 @@ library.add(
   faEye,
   faEyeSlash,
   faCircleNotch,
-  faCircle
+  faCircle,
+  faImages
 );
 
 const Home = lazy(() => import("./component/pages/home/Home"));
