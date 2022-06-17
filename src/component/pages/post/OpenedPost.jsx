@@ -78,7 +78,6 @@ function OpenedPost() {
   }, []);
 
   const commentPost = async (content) => {
-    console.log("eto");
     const url = `/posts/${id}/comments`;
     const token = getUserInfo().token;
     const userId = getUserInfo().user._id;
@@ -89,8 +88,9 @@ function OpenedPost() {
     const res = await fetchData(url, "POST", token, data);
     if (res.status !== 201) console.log("cannot comment");
     else {
-      setForcedUpdate(forcedUpdate + 1);
-      console.log(forcedUpdate);
+      // setForcedUpdate(forcedUpdate + 5);
+      // console.log(forcedUpdate);
+      window.location.reload();
     }
   };
 

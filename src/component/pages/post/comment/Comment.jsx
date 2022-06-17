@@ -44,7 +44,7 @@ function Comment({ comment }) {
           />
         </Link>
         <div className="w-auto flex flex-col rounded-2xl bg-white">
-          <div className="head flex w-100 px-2 pt-2">
+          <div className="head flex w-100 px-3 pt-2">
             <div
               className="mx-2 md:mx-0 flex flex-col justify-start"
               style={{ cursor: "pointer" }}
@@ -55,7 +55,7 @@ function Comment({ comment }) {
               </Link>
             </div>
           </div>
-          <div className="content px-2 pb-2 mx-2 md:mx-0">
+          <div className="content px-3 pb-2 mx-2 md:mx-0">
             <p>{comment.content}</p>
           </div>
         </div>

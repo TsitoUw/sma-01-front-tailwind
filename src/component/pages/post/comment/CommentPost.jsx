@@ -1,6 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
-import { networkConfig } from "../../../../shared/networkConfig";
 function CommentPost({ onCommentPost, onFocus, onBlur }) {
   const [content, setContent] = useState("");
 
