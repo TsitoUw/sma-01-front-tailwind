@@ -8,6 +8,7 @@ import noPostSvg from "../../../assets/svg/undraw_post_re_mtr4.svg";
 import usePaginate from "../../../shared/usePaginate";
 import { showToastInOut } from "../../../shared/utiles";
 import Toast from "../../toast/Toast";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function Home() {
   const [limit, setLimit] = useState(8);
@@ -91,8 +92,8 @@ function Home() {
                   );
               })}
             {loading && (
-              <div className="">
-                <div className="spinner-grow sprinner-grow-sm text-muted"></div>
+              <div className="w-full flex justify-center items-center p-10">
+                <FontAwesomeIcon icon="circle-notch" size="lg" className="text-rose-400 mx-1 animate-spin" />
               </div>
             )}
           </div>

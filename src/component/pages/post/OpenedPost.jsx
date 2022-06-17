@@ -10,6 +10,7 @@ import CommentPost from "./comment/CommentPost";
 import Post from "./Post";
 import { SocketContext } from "../../../shared/socket.context";
 import usePaginate from "../../../shared/usePaginate";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function OpenedPost() {
   const socket = useContext(SocketContext);
@@ -25,7 +26,7 @@ function OpenedPost() {
 
   if (!id || id.trim() === "") window.history.back();
 
-  const { loading, hasMore, error, entities } = usePaginate(forcedUpdate, `posts/${id}/comments`, 1, 8, "asc");
+  const { loading, hasMore, error, entities } = usePaginate(forcedUpdate, `posts/${id}/comments`, page, limit, "asc");
 
   const navigate = useNavigate();
   const commentEndRef = useRef();
@@ -113,16 +114,11 @@ function OpenedPost() {
 
   return (
     <div className="openedPost">
-      <Toast body={toastBody} show={showToast} />
-
-      <div className="d-flex justify-content-center">
-        <div className="post col-12 col-md-5 d-flex flex-column bg-dark" style={{ borderBottomLeftRadius: "4px", borderBottomRightRadius: "4px" }}>
-          {post && <Post post={post} />}
-        </div>
-      </div>
-      <div className="row justify-content-center pb-5">
+      <div className="">{post && <Post post={post} />}</div>
+      <CommentPost onCommentPost={commentPost} onFocus={focused} onBlur={blured} />
+      <div className="flex flex-col mt-1">
         {entities.length > 0 && (
-          <div className="col-12 col-md-5 row gx-0 justify-content-center pb-5">
+          <div className="">
             {entities.map((comment, index) => {
               if (entities.length === index + 1)
                 return (
@@ -145,21 +141,18 @@ function OpenedPost() {
           </div>
         )}
         {loading && (
-          <div className="w-100 d-flex justify-content-center pt-1 pb-5">
-            <div className="spinner-grow sprinner-grow-sm text-muted"></div>
+          <div className="w-full flex justify-center items-center p-10">
+            <FontAwesomeIcon icon="circle-notch" size="lg" className="text-rose-400 mx-1 animate-spin" />
           </div>
         )}
         {isWriting && entities.length < 1 && <div className="w-100 d-flex justify-content-center pt-1">someone is writing...</div>}
         {entities.length < 1 && !loading && (
-          <div className="col-12 col-md-5 pb-1">
-            <div className="d-flex justify-content-center">
-              <img src={noComments} alt="" width="250px" className="pt-3" />
-            </div>
+          <div className="w-full flex justify-center items-center p-5">
+            <img src={noComments} alt="" width="200px" />
           </div>
         )}
         <div ref={commentEndRef} />
       </div>
-      <CommentPost onCommentPost={commentPost} onFocus={focused} onBlur={blured} />
     </div>
   );
 }

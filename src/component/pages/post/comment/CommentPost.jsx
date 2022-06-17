@@ -9,39 +9,24 @@ function CommentPost({ onCommentPost, onFocus, onBlur }) {
     onCommentPost(content);
   };
   return (
-    <div className="fixed-bottom d-flex justify-content-center" style={{ zIndex: "1" }}>
-      <form
-        className="col-12 col-md-5 d-flex bg-dark p-2"
-        onSubmit={handleCreatePost}
-        style={{
-          alignItems: "flex-end",
-          justifyContent: "center",
-          borderTopLeftRadius: "4px",
-          borderTopRightRadius: "4px",
-        }}
-      >
+    <div className="comment-post w-100 px-2">
+      <form className="flex items-center justify-center bg-white rounded-xl" onSubmit={handleCreatePost}>
         <textarea
-          className="w-100 form-control"
-          placeholder=" Write a comment..."
-          cols="50"
-          rows="2"
+          className="w-11/12 lg:w-11/12 resize-none p-2 px-3 rounded-xl"
+          placeholder="Write a comment..."
+          rows="1"
           value={content}
           onChange={(e) => {
-            e.preventDefault()
+            e.preventDefault();
             setContent(e.target.value);
-          }}
-          style={{
-            backgroundColor: "#323232",
-            color: "white",
-            border: "solid 1px #222222",
-            resize: "none",
-            height: "2.45rem",
-            borderRadius: "4px",
           }}
           onFocus={onFocus}
           onBlur={onBlur}
         ></textarea>
-        <button className="btn btn-primary ms-1" type="submit">
+        <button
+          className={content.trim() === "" ? "text-slate-400 w-1/12 lg:w-1/12" : "text-rose-500 md:text-blue-400 w-1/12 lg:w-1/12"}
+          type="submit"
+        >
           <FontAwesomeIcon icon="comment" />
         </button>
       </form>

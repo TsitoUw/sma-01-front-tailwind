@@ -209,7 +209,7 @@ function Post({ post }) {
               <FontAwesomeIcon icon={"heart"} className="p-1" /> {likesCount > 0 && <span className="mx-1 text-sm">{likesCount}</span>}
             </div>
             <Link
-              className="w-4/12 text-slate-400 flex items-center justify-center border border-slate-400 px-4 py-1 rounded-lg mx-1 md:mx-2 hover:border-rose-400 hover:text-rose-400"
+              className="w-4/12  flex items-center justify-center border text-slate-400 border-slate-400 px-4 py-1 rounded-lg mx-1 md:mx-2  md:hover:border-rose-400 md:hover:text-rose-400"
               to={`/post/${post._id}`}
             >
               <FontAwesomeIcon icon={"comment"} className="p-1" />{" "}
