@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 function ProfileHeader({ user }) {
   const navigate = useNavigate();
   return (
-    <div className="profile-header px-2 py-1" key={user._id}>
+    <div className="profile-header px-2 py-1">
       <div className="bg-white flex flex-col p-2 rounded-lg">
         <div className="head flex w-100">
           <Link to={`/profile/${user._id}`} className="w-2/12 xl:w-1/12 flex justify-center items-center p-2">

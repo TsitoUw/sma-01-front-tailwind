@@ -28,13 +28,13 @@ function TopNav() {
       <div className="flex flex-col">
         {/* ------- brand ------- */}
 
-        <div className="brand py-1">
+        <div className="brand py-2">
           <div className="flex justify-start px-2 items-center text-rose-500">
             <Link to="/" className="logo flex justify-center items-center mx-1 w-8 h-8 rounded-full p-2 bg-white shadow-lg">
               <FontAwesomeIcon icon="cloud" size="sm" />
             </Link>
             <Link to="/" className="">
-              <h3 className="mx-1 text-success text-md font-semibold">Pooped</h3>
+              <h3 className="mx-1 text-md font-semibold">Pooped</h3>
             </Link>
           </div>
         </div>

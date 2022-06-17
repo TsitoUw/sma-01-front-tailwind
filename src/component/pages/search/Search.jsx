@@ -64,20 +64,16 @@ function Search() {
             })}
         </div>
       </div>
-      <div className="d-flex justify-content-center row">
-        <div className="col-12 col-md-5">
-          <div className="post d-flex flex-column w-100">
-            {posts.length > 0 && <p className="text-slate-400 m-0 p-0 px-4 pt-2">Post</p>}
-            {posts.length > 0 &&
-              posts.map((post) => {
-                return (
-                  <div key={post._id}>
-                    <Post post={post} />
-                  </div>
-                );
-              })}
-          </div>
-        </div>
+      <div className="post flex flex-col w-full">
+        {posts.length > 0 && <p className="text-slate-400 m-0 p-0 px-4 pt-2">Post</p>}
+        {posts.length > 0 &&
+          posts.map((post) => {
+            return (
+              <div key={post._id}>
+                <Post post={post} />
+              </div>
+            );
+          })}
       </div>
       <div className="flex justify-center">
         <div className="post flex flex-column w-100">

@@ -48,7 +48,6 @@ function Post({ post }) {
   const getThisPost = async () => {
     const thisPost = await fetchData(`/posts/${post._id}`, "GET", getUserInfo().token);
     thisPost.data.likes.forEach((like) => {
-      console.log(like);
       if (getUserInfo().user._id === like) {
         setLiked(true);
       }
@@ -112,9 +111,9 @@ function Post({ post }) {
   }, 60000);
 
   return (
-    <div className="post px-2 py-1" key={post._id}>
-      <div className="bg-white flex flex-col p-2 rounded-lg">
-        <div className="head flex w-100">
+    <div className="post px-2 py-1">
+      <div className="bg-white flex flex-col rounded-lg">
+        <div className="head flex w-100 p-2">
           <Link to={`/profile/${post.author._id}`} className="w-2/12 xl:w-1/12 flex justify-center items-center p-2">
             <img
               src={
@@ -171,7 +170,7 @@ function Post({ post }) {
           </div>
         </div>
         {!isEditing && (
-          <Link to={`/post/${post._id}`} className="text-slate-900">
+          <Link to={`/post/${post._id}`} className="text-slate-900 p-2">
             <div className="mx-2 my-1" style={{ maxWidth: "100%", whiteSpace: "pre-wrap" }}>
               {post.content}
             </div>
@@ -192,44 +191,44 @@ function Post({ post }) {
         )} */}
         {(post.picture === undefined || post.picture !== "none") && (
           <Link to={`/post/${post._id}`} className="images object-contain">
-            <img src={networkConfig.static + "/posts/" + post._id + "/" + post.picture} alt="post" />
+            <img src={networkConfig.static + "/upload/" + post._id + "/" + post.picture} alt="post" />
           </Link>
         )}
-        {/* {!isEditing && (
-        <div className="">
-          <div className="w-100 d-flex" style={{ borderTop: "1px solid #666" }}>
-            <div className="link w-100 me-1 mt-1">
-              <div
-                className="btn btn-dark w-100"
-                onClick={() => {
-                  likeThis();
-                }}
-              >
-                <div className="text-slate-900">
-                  <FontAwesomeIcon icon={"heart"} className="p-1" color={liked ? "red" : ""} />{" "}
-                  {likesCount > 0 && (
-                    <span className="mx-1" style={{ fontSize: "12px" }}>
-                      {likesCount}
-                    </span>
-                  )}
-                </div>
-              </div>
+        {!isEditing && (
+          <div className="w-full flex p-2">
+            <div
+              className={
+                liked
+                  ? "w-4/12 text-rose-500 flex items-center justify-center border border-rose-500 px-4 py-1 rounded-lg mx-1 md:mx-2"
+                  : "w-4/12 text-slate-400 flex items-center justify-center border border-slate-400 hover:border-rose-400 hover:text-rose-400 px-4 py-1 rounded-lg mx-1 md:mx-2"
+              }
+              onClick={() => {
+                likeThis();
+              }}
+            >
+              <FontAwesomeIcon icon={"heart"} className="p-1" /> {likesCount > 0 && <span className="mx-1 text-sm">{likesCount}</span>}
             </div>
-            <Link className="link w-100 mt-1" to={`/post/${post._id}`}>
-              <div className="btn btn-dark w-100">
-                <div className="d-flex align-items-center justify-content-center">
-                  <FontAwesomeIcon icon={"comment"} className="p-1" />{" "}
-                  {post.comments && post.comments.length > 0 && (
-                    <span className="p-0 m-0 mx-1" style={{ fontSize: "12px" }}>
-                      {post.comments.length}
-                    </span>
-                  )}
-                </div>
-              </div>
+            <Link
+              className="w-4/12 text-slate-400 flex items-center justify-center border border-slate-400 px-4 py-1 rounded-lg mx-1 md:mx-2 hover:border-rose-400 hover:text-rose-400"
+              to={`/post/${post._id}`}
+            >
+              <FontAwesomeIcon icon={"comment"} className="p-1" />{" "}
+              {post.comments && post.comments.length > 0 && <span className="mx-1 text-sm">{post.comments.length}</span>}
             </Link>
+            <div
+              className={
+                liked
+                  ? "w-4/12 text-rose-500 flex items-center justify-center border border-rose-500 px-4 py-1 rounded-lg mx-1 md:mx-2"
+                  : "w-4/12 text-slate-400 flex items-center justify-center border border-slate-400 px-4 py-1 rounded-lg mx-1 md:mx-2 hover:border-rose-400 hover:text-rose-400"
+              }
+              onClick={() => {
+                likeThis();
+              }}
+            >
+              <FontAwesomeIcon icon={"bookmark"} className="p-1" />{" "}
+            </div>
           </div>
-        </div>
-      )} */}
+        )}
       </div>
     </div>
   );
