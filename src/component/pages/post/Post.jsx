@@ -115,7 +115,7 @@ function Post({ post }) {
     <div className="post px-2 py-1" key={post._id}>
       <div className="bg-white flex flex-col p-2 rounded-lg">
         <div className="head flex w-100">
-          <Link to={`/profile/${post.author._id}`} className="w-2/12 flex justify-center items-center p-2">
+          <Link to={`/profile/${post.author._id}`} className="w-2/12 xl:w-1/12 flex justify-center items-center p-2">
             <img
               src={
                 post.author.profilPicture === undefined || post.author.profilPicture === "none"
@@ -124,12 +124,12 @@ function Post({ post }) {
               }
               alt=""
               className="aspect-square object-cover rounded-full flex-none"
-              width="45px"
-              height="45px"
+              width="40px"
+              height="40px"
             />
           </Link>
           <div
-            className="w-9/12 mx-2 md:mx-0 flex flex-col justify-start"
+            className="w-9/12 xl:w-10/12 mx-2 md:mx-0 flex flex-col justify-start"
             style={{ cursor: "pointer" }}
             onClick={() => navigate(`/profile/${post.author._id}`)}
           >
@@ -172,7 +172,7 @@ function Post({ post }) {
         </div>
         {!isEditing && (
           <Link to={`/post/${post._id}`} className="text-slate-900">
-            <div className="" style={{ maxWidth: "100%", whiteSpace: "pre-wrap" }}>
+            <div className="mx-2 my-1" style={{ maxWidth: "100%", whiteSpace: "pre-wrap" }}>
               {post.content}
             </div>
           </Link>

@@ -7,6 +7,7 @@ import defaultPfp from "../../../assets/default-avatar.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import { networkConfig } from "../../../shared/networkConfig";
 import { SearchInput } from "./SearchInput";
+import ProfileHeader from "../profile/ProfileHeader";
 
 function Search() {
   const [text, setText] = useState("");
@@ -31,7 +32,7 @@ function Search() {
   };
 
   const findPosts = async () => {
-    const url = "/search/posts/" + text;
+    const url = "/posts/search/" + text;
     let res = await fetchData(url, "GET", getUserInfo().token);
     setPosts(res.data);
     setPostsLength(res.data.length);
@@ -39,7 +40,7 @@ function Search() {
   };
 
   const findUsers = async () => {
-    const url = "/search/users/" + text;
+    const url = "/users/search/" + text;
     let res = await fetchData(url, "GET", getUserInfo().token);
     setUsers(res.data);
     setUsersLength(res.data.length);
@@ -49,42 +50,15 @@ function Search() {
   return (
     <div className="search">
       <SearchInput onSearch={onSearch} setText={setText} text={text} />
-      {/* <div className="flex justify-center">
-        <div className="post d-flex flex-column w-100">
-          {users.length > 0 && <p className="text-muted m-0 p-0 px-2 pt-2">People</p>}
+      <div className="flex justify-center">
+        <div className="user flex flex-col w-full">
+          {users.length > 0 && <p className="text-slate-400 m-0 p-0 px-4 pt-2">People</p>}
 
           {users.length > 0 &&
             users.map((user) => {
               return (
-                <div className="d-flex justify-content-center pt-2 mx-1" key={user._id}>
-                  <div className="post col-12 col-md-6 d-flex w-100 flex-column bg-dark" style={{ borderRadius: "4px" }}>
-                    <div className="head d-flex w-100 p-2">
-                      <Link to={`/profil/${user._id}`} className="col-2 col-lg-1 d-flex align-items-center justify-content-center">
-                        <img
-                          src={
-                            !user.profilPicture || user.profilPicture === "none"
-                              ? defaultPfp
-                              : networkConfig.static + "/users/" + user._id + "/" + user.profilPicture
-                          }
-                          alt=""
-                          className="p-2"
-                          style={{ borderRadius: "50%", width: "55px", height: "55px", objectFit: "cover" }}
-                        />
-                      </Link>
-                      <div
-                        className="col-9 col-lg-10 d-flex flex-column justify-content-center"
-                        style={{ cursor: "pointer" }}
-                        onClick={() => navigate(`/profil/${user._id}`)}
-                      >
-                        <Link to={`/profil/${user._id}`}>
-                          <h6 className="m-0 px-1">{user.name}</h6>
-                        </Link>
-                      </div>
-                      <div className="col-1 d-flex justify-content-center">
-                        <FontAwesomeIcon icon={"cloud"} className="pt-3" />
-                      </div>
-                    </div>
-                  </div>
+                <div key={user._id}>
+                  <ProfileHeader user={user} />
                 </div>
               );
             })}
@@ -93,7 +67,7 @@ function Search() {
       <div className="d-flex justify-content-center row">
         <div className="col-12 col-md-5">
           <div className="post d-flex flex-column w-100">
-            {posts.length > 0 && <p className="text-muted m-0 p-0 px-2 pt-2">Post</p>}
+            {posts.length > 0 && <p className="text-slate-400 m-0 p-0 px-4 pt-2">Post</p>}
             {posts.length > 0 &&
               posts.map((post) => {
                 return (
@@ -104,7 +78,7 @@ function Search() {
               })}
           </div>
         </div>
-      </div> */}
+      </div>
       <div className="flex justify-center">
         <div className="post flex flex-column w-100">
           {postsLength < 1 && usersLength < 1 && !isSearching && (
@@ -116,8 +90,8 @@ function Search() {
       </div>
 
       {isSearching && (
-        <div className="col-12 col-md-5 d-flex justify-content-center w-100">
-          <div className="spinner-grow spinner-grow-xl text-muted my-3" />
+        <div className="w-full flex justify-center items-center p-10">
+          <FontAwesomeIcon icon="circle-notch" size="lg" className="text-rose-400 mx-1 animate-spin" />
         </div>
       )}
     </div>
