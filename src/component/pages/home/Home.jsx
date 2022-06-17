@@ -66,10 +66,10 @@ function Home() {
   return (
     <div className="home px-0 md:px-4">
       <Toast body={toastBody} show={showToast} />
-      <div className="bodyw">
+      <div className="body">
         <div className="content ">
           <CreatePost onCreatePost={handleCreatePost} placeHolder={"Write something to create a post"} />
-          <div className="post ">
+          <div className="post">
             {entities.length < 1 && !loading && (
               <div className="flex justify-center items-center">
                 <img src={noPostSvg} alt="" width="350px" className="p-20" />

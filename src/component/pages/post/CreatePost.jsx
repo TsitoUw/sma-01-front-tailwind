@@ -99,45 +99,36 @@ function CreatePost({ onCreatePost, placeHolder }) {
     <div className="bg-white rounded-b-xl">
       <Toast body={toastBody} show={showToast} />
       <form className="flex flex-col items-center" onSubmit={handleCreatePost}>
-        <div className="flex items-center w-full">
-          <div className="flex w-10/12">
-            <div className="aspect-square rounded-full w-2/12 flex justify-center items-center">
-              <img
-                src={
-                  getUserInfo().user.profilPicture === "none" || !getUserInfo().user.profilPicture
-                    ? defaultPfp
-                    : networkConfig.static + "/users/" + getUserInfo().user._id + "/" + getUserInfo().user.profilPicture
-                }
-                alt=""
-                className="p-2 w-14"
-                style={{ objectFit: "cover" }}
-              />
-            </div>
-            <div className="flex justify-center items-center w-10/12">
-              <div className="w-full flex items-center">
-                <textarea
-                  onBlur={() => setFocused(false)}
-                  onClick={() => setFocused(true)}
-                  className="bg-slate-100 w-full p-2 rounded-xl resize-none my-2"
-                  placeholder={placeHolder}
-                  value={content}
-                  rows={focused ? "4" : "1"}
-                  type="text"
-                  onChange={(e) => setContent(e.target.value)}
-                />
-              </div>
-            </div>
-            <input
-              type="file"
-              accept=".jpeg,.jpg,.png"
-              ref={fileInputRef}
-              name="profile-picture"
-              className="hidden"
-              onChange={handlePhotoFileChange}
+        <div className="flex items-center w-full px-2 pt-2 pb-4">
+          <div className="aspect-square rounded-full w-2/12 md:w-1/12 flex justify-center items-center">
+            <img
+              src={
+                getUserInfo().user.profilPicture === "none" || !getUserInfo().user.profilPicture
+                  ? defaultPfp
+                  : networkConfig.static + "/users/" + getUserInfo().user._id + "/" + getUserInfo().user.profilPicture
+              }
+              alt=""
+              className="p-2 w-14"
+              style={{ objectFit: "cover" }}
             />
           </div>
+          <div className="flex justify-center items-center w-9/12 md:w-10/12 ">
+            <div className="w-full flex items-center">
+              <textarea
+                onBlur={() => setFocused(false)}
+                onClick={() => setFocused(true)}
+                className="bg-slate-100 w-full p-2 rounded-xl resize-none my-2"
+                placeholder={placeHolder}
+                value={content}
+                rows={focused ? "2" : "1"}
+                type="text"
+                onChange={(e) => setContent(e.target.value)}
+              />
+            </div>
+          </div>
+          <input type="file" accept=".jpeg,.jpg,.png" ref={fileInputRef} name="profile-picture" className="hidden" onChange={handlePhotoFileChange} />
           {content === "" || content.trim() === "" ? (
-            <div className="w-2/12 flex flex-col justify-center">
+            <div className="w-2/12 md:w-1/12 flex flex-col justify-center">
               <div className="flex justify-center">
                 <button type="button" className="text-slate-800" onClick={() => fileInputRef.current.click()}>
                   <FontAwesomeIcon icon={"images"} />
@@ -150,13 +141,13 @@ function CreatePost({ onCreatePost, placeHolder }) {
               </div>
             </div>
           ) : (
-            <div className="w-2/12 flex justify-centera items-center">
+            <div className="w-2/12 md:w-1/12 flex justify-centera items-center">
               <button
-                className="mx-2 w-full h-9 rounded-xl flex items-center justify-center text-blue-500 hover:text-white border-blue-400 border active:bg-blue-500 hover:bg-blue-500"
+                className=" mx-2 w-full h-9 rounded-xl flex items-center justify-center text-blue-500 hover:text-white border-blue-400 border active:bg-blue-500 hover:bg-blue-500"
                 type="submit"
                 disabled={content === "" || content.trim() === "" ? true : false}
               >
-                Post
+                <FontAwesomeIcon icon="check" />
               </button>
             </div>
           )}
