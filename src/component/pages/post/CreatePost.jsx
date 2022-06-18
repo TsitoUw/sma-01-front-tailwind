@@ -1,14 +1,13 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { networkConfig } from "../../../shared/networkConfig";
-import { getUserInfo } from "../../../shared/utiles";
-import { getUser } from "../../../shared/querry";
 import defaultPfp from "../../../assets/default-avatar.jpg";
 import Toast from "../../toast/Toast";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../../shared/user.context";
 
-function CreatePost({ onCreatePost, placeHolder }) {
-  const [user, setUser] = useState({});
+function CreatePost({ onCreatePost, placeHolder, onUpdate }) {
+  const { user } = useContext(UserContext);
   const [content, setContent] = useState("");
   const [focused, setFocused] = useState(false);
   const [_src, set_Src] = useState(null);
@@ -28,18 +27,9 @@ function CreatePost({ onCreatePost, placeHolder }) {
       setContent("");
       postId = res.data._id;
       if (uploadFile !== null) await handleSave(e, postId);
-      // window.location.reload();
+      onUpdate((u) => u + 2);
     }
   };
-
-  const getThisUser = useCallback(async () => {
-    const res = await getUser(getUserInfo().user._id);
-    setUser(res.data);
-  }, []);
-
-  useEffect(() => {
-    getThisUser();
-  }, [getThisUser]);
 
   const handlePhotoFileChange = (e) => {
     e.preventDefault();
@@ -68,7 +58,7 @@ function CreatePost({ onCreatePost, placeHolder }) {
     const data = await fetch(url, {
       method: "POST",
       headers: {
-        Authorization: getUserInfo().token,
+        Authorization: user.accessToken,
       },
       body: photoData,
     });
@@ -77,7 +67,6 @@ function CreatePost({ onCreatePost, placeHolder }) {
     if (res.data) {
       setUploadFile(null);
       set_Src(null);
-      getThisUser();
       if (fileInputRef.current.files) {
         fileInputRef.current.files = null;
       }
@@ -103,9 +92,9 @@ function CreatePost({ onCreatePost, placeHolder }) {
           <div className="aspect-square rounded-full w-2/12 md:w-1/12 flex justify-center items-center">
             <img
               src={
-                getUserInfo().user.profilPicture === "none" || !getUserInfo().user.profilPicture
+                user.profilPicture === "none" || !user.profilPicture
                   ? defaultPfp
-                  : networkConfig.static + "/users/" + getUserInfo().user._id + "/" + getUserInfo().user.profilPicture
+                  : networkConfig.static + "/users/" + user._id + "/" + user.profilPicture
               }
               alt=""
               className="p-2 w-14"

@@ -1,17 +1,14 @@
 import { getItems, removeItems } from "./utiles";
 
 export const basicAuth = () => {
-	if (!getItems("token") || !getItems("info")) {
-		removeItems("token");
-		removeItems("info");
-		window.location.href = "/login";
-		return;
-	}
-	const token = getItems("token");
-	const info = getItems("info");
-	let user = {};
-	try {
-		user = JSON.parse(info);
-	} catch (error) {}
-	return { token, user };
+  if (!getItems("accessToken") || !getItems("userId")) {
+    removeItems("accessToken");
+    removeItems("userId");
+    window.location.href = "/login";
+    return;
+  }
+  const accessToken = getItems("accessToken");
+  const userId = getItems("userId");
+
+  return { accessToken, userId };
 };

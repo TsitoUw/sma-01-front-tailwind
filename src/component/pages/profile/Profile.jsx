@@ -11,18 +11,21 @@ import "./Profile.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import usePaginate from "../../../shared/usePaginate";
 import Toast from "../../toast/Toast";
+import { useContext } from "react";
+import { UserContext } from "../../../shared/user.context";
 
 function Profile() {
-  const id = window.location.toString().split(networkConfig.front + "/profil/")[1] || getUserInfo().user._id;
+  const id = window.location.pathname.split("/profile/")[1];
   const navigate = useNavigate();
   const [user, setUser] = useState({});
   const [limit, setLimit] = useState(8);
   const [page, setPage] = useState(1);
   const [showToast, setShowToast] = useState(false);
   const [toastBody, setToastBody] = useState("");
+  const [update, setUpdate] = useState(5);
 
-  const currentUser = getUserInfo();
-  const { loading, error, hasMore, entities } = usePaginate(0, `users/${id}/posts`, page, limit);
+  const { user: currentUser } = useContext(UserContext);
+  let { loading, error, hasMore, entities } = usePaginate(`users/${id}/posts`, page, limit, "desc", update);
 
   const observer = useRef();
   const lastPostEltRef = useCallback(
@@ -53,15 +56,16 @@ function Profile() {
   }, [id]);
 
   useEffect(() => {
+    setUpdate((u) => u + 2);
     getThisUser();
-  }, [id, getThisUser]);
+  }, [id]);
 
-  const handleCreatePost = async (title) => {
-    const authorization = currentUser.token;
+  const handleCreatePost = async (content) => {
+    const authorization = currentUser.accessToken;
     if (!authorization) navigate("/login");
     const url = `/posts`;
-    const author = currentUser.user._id;
-    const data = { title: title, author: author };
+    const author = currentUser._id;
+    const data = { content: content, author: author };
     const res = await fetchData(url, "POST", authorization, data);
     if (res.status !== 201) {
       console.log("unable to post");
@@ -101,7 +105,7 @@ function Profile() {
           </div>
           <div className="info-menu col-12 col-md-4 d-flex justify-content-center" style={{ alignItems: "flex-end" }}>
             <div className="menu d-flex p-2 justify-content-center">
-              {currentUser.user._id === user._id && (
+              {currentUser._id === user._id && (
                 <div className="edit-profil-btn w-100">
                   <button
                     className="btn btn-secondary mx-1 d-flex align-items-center justify-content-center w-100"
@@ -117,9 +121,9 @@ function Profile() {
       </div>
       <div className="d-flex row justify-content-center">
         <div className="col-12 col-md-5">
-          {currentUser.user._id === user._id && (
+          {currentUser._id === user._id && (
             <div className="container-fluid">
-              <CreatePost onCreatePost={handleCreatePost} placeHolder={"Post a status..."} />
+              <CreatePost onCreatePost={handleCreatePost} onUpdate={setUpdate} placeHolder={"Post a status..."} />
             </div>
           )}
           <div className="post container-fluid d-flex flex-column">

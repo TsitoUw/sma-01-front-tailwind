@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { networkConfig } from "../../../../shared/networkConfig";
 import defaultPfp from "../../../../assets/default-avatar.jpg";
 import "./Comment.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, useNavigate } from "react-router-dom";
 import { comparedDate } from "../../../../shared/date";
-import { getUserInfo } from "../../../../shared/utiles";
+import { UserContext } from "../../../../shared/user.context";
 
 function Comment({ comment }) {
   const [postedAt, setPostedAt] = useState("");
   const [createdAt, setCreatedAt] = useState("");
-  const currentUser = getUserInfo().user;
   const navigate = useNavigate();
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     setPostedAt(comparedDate(comment.createdAt));
@@ -28,7 +28,7 @@ function Comment({ comment }) {
   }, 60000);
 
   return (
-    <div className="comment px-2 py-1 flex flex-col">
+    <div className="comment px-2 flex flex-col">
       <div className="comment-content flex items-start">
         <Link to={`/profile/${comment.author._id}`} className="w-2/12 xl:w-1/12 flex justify-center items-center p-2">
           <img
@@ -69,7 +69,7 @@ function Comment({ comment }) {
         <div className="text-transparent w-2/12 xl:w-1/12">lol</div>
         <div className="w-10/12 xl:w-11/12 flex">
           <p className="text-sm mx-1 text-slate-400">{postedAt}</p>
-          {currentUser._id === comment.author._id && <p className="mx-1 text-sm hover:text-blue-400 pointer">Delete</p>}
+          {user._id === comment.author._id && <p className="mx-1 text-sm hover:text-blue-400 pointer">Delete</p>}
         </div>
       </div>
     </div>

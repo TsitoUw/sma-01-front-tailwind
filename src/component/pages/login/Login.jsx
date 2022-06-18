@@ -23,15 +23,10 @@ function Login() {
       setShowErr(true);
       setIsLoading(false);
     } else {
-      const info = {
-        _id: res.data._id,
-        name: res.data.name,
-        email: res.data.email,
-        profilPicture: res.data.profilPicture,
-      };
-      const token = "Bearer " + res.accessToken;
-      setItems("token", token);
-      setItems("info", JSON.stringify(info));
+      const userId = res.data.userId;
+      const token = "Bearer " + res.data.accessToken;
+      setItems("accessToken", token);
+      setItems("userId", userId);
       setIsLoading(false);
       navigate("/");
     }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { fetchData } from "../../../shared/utiles";
 import { getUserInfo } from "../../../shared/utiles";
@@ -7,12 +7,13 @@ import defaultPfp from "../../../assets/default-avatar.jpg";
 import "./Post.css";
 import { networkConfig } from "../../../shared/networkConfig";
 import { comparedDate } from "../../../shared/date";
+import { UserContext } from "../../../shared/user.context";
 
 function Post({ post }) {
+  const { user } = useContext(UserContext);
   const [isEditing, setIsEditing] = useState("");
   const [editId, setEditId] = useState("");
   const [content, setContent] = useState("");
-  const [currentUser, setCurrentUser] = useState({});
   const [openedOption, setOpenedOption] = useState(false);
   const [postedAt, setPostedAt] = useState("");
   const [createdAt, setCreatedAt] = useState("");
@@ -22,7 +23,6 @@ function Post({ post }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setCurrentUser(getUserInfo().user);
     setContent(post.content);
     setPostedAt(comparedDate(post.createdAt));
     setCreatedAt(post.createdAt);
@@ -37,18 +37,18 @@ function Post({ post }) {
 
   const likeThis = async () => {
     setLiked((l) => !l);
-    const id = getUserInfo().user._id;
+    const id = user._id;
     const data = { userId: id };
-    const res = await fetchData(`/posts/${post._id}/like`, "PUT", getUserInfo().token, data);
+    const res = await fetchData(`/posts/${post._id}/like`, "PUT", user.accessToken, data);
     setLikesCount((c) => (c = res.data.likes.length));
     console.log(res.data.likes.length);
     setReload((r) => r + 1);
   };
 
   const getThisPost = async () => {
-    const thisPost = await fetchData(`/posts/${post._id}`, "GET", getUserInfo().token);
+    const thisPost = await fetchData(`/posts/${post._id}`, "GET", user.accessToken);
     thisPost.data.likes.forEach((like) => {
-      if (getUserInfo().user._id === like) {
+      if (user._id === like) {
         setLiked(true);
       }
     });
@@ -59,11 +59,11 @@ function Post({ post }) {
   const editPost = async (e) => {
     e.preventDefault();
 
-    const authorization = getUserInfo().token;
+    const authorization = user.accessToken;
     const id = post._id;
     const url = `/posts/${id}`;
     const author = post.author._id;
-    const userId = getUserInfo().user._id;
+    const userId = user._id;
 
     const oldValue = post.content;
     const value = content;
@@ -90,7 +90,7 @@ function Post({ post }) {
   const deletePost = async (e) => {
     e.preventDefault();
     const authorization = getUserInfo().token;
-    const actualUser = currentUser._id;
+    const actualUser = user._id;
 
     const url = "/posts/" + post._id;
     const data = { actualUser: actualUser };

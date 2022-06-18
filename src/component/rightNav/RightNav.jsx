@@ -12,18 +12,6 @@ function RightNav() {
   const navigate = useNavigate();
   const [showLogoutModal, setShowLogoutModal] = useState(false);
 
-  const isLogged = () => {
-    if (getItems("token") === "" || getItems("info") === "") {
-      removeItems("token");
-      removeItems("info");
-      navigate("/login");
-    }
-  };
-
-  useEffect(() => {
-    isLogged();
-  }, []);
-
   const onLogout = () => {
     removeItems("info");
     removeItems("token");

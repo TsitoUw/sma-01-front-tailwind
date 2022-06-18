@@ -1,25 +1,27 @@
-import React, { useEffect, useState, useCallback, useRef } from "react";
+import React, { useEffect, useState, useCallback, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import CreatePost from "../post/CreatePost";
 import Post from "../post/Post";
-import { getUserInfo, fetchData } from "../../../shared/utiles";
+import { fetchData } from "../../../shared/utiles";
 import "./Home.css";
 import noPostSvg from "../../../assets/svg/undraw_post_re_mtr4.svg";
 import usePaginate from "../../../shared/usePaginate";
 import { showToastInOut } from "../../../shared/utiles";
 import Toast from "../../toast/Toast";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { UserContext } from "../../../shared/user.context";
 
 function Home() {
+  const { user } = useContext(UserContext);
   const [limit, setLimit] = useState(8);
   const [page, setPage] = useState(1);
-  const [currentUser, setCurrentUser] = useState({});
   const [showToast, setShowToast] = useState(false);
   const [toastBody, setToastBody] = useState("");
+  const [update, setUpdate] = useState(5);
 
   const navigate = useNavigate();
 
-  const { loading, error, hasMore, entities } = usePaginate(0, "posts", page, limit);
+  const { loading, error, hasMore, entities } = usePaginate("posts", page, limit, "desc", update);
 
   const observer = useRef();
   const lastPostEltRef = useCallback(
@@ -44,15 +46,11 @@ function Home() {
     }
   }, [error]);
 
-  useEffect(() => {
-    setCurrentUser(getUserInfo());
-  }, []);
-
   const handleCreatePost = async (content) => {
-    const authorization = currentUser.token;
+    const authorization = user.accessToken;
     if (!authorization) navigate("/login");
     const url = `/posts`;
-    const author = currentUser.user._id;
+    const author = user._id;
     const data = { content: content, author: author };
     const res = await fetchData(url, "POST", authorization, data);
     if (res.status !== 201) {
@@ -69,7 +67,7 @@ function Home() {
       <Toast body={toastBody} show={showToast} />
       <div className="body">
         <div className="content ">
-          <CreatePost onCreatePost={handleCreatePost} placeHolder={"Write something to create a post"} />
+          <CreatePost onCreatePost={handleCreatePost} onUpdate={setUpdate} placeHolder={"Share your thought"} />
           <div className="post">
             {entities.length < 1 && !loading && (
               <div className="flex justify-center items-center">

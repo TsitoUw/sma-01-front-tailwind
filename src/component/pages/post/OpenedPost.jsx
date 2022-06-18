@@ -11,14 +11,16 @@ import Post from "./Post";
 import { SocketContext } from "../../../shared/socket.context";
 import usePaginate from "../../../shared/usePaginate";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { UserContext } from "../../../shared/user.context";
 
 function OpenedPost() {
   const socket = useContext(SocketContext);
-  const id = window.location.toString().split(networkConfig.front + "/post/")[1];
+  const { user } = useContext(UserContext);
+
+  const id = window.location.pathname.split("/post/")[1];
   const [post, setPost] = useState(null);
   const [limit, setLimit] = useState(8);
   const [page, setPage] = useState(1);
-  const [currentUser, setCurrentUser] = useState({});
   const [showToast, setShowToast] = useState(false);
   const [toastBody, setToastBody] = useState("");
   const [isWriting, setIsWriting] = useState(false);
@@ -63,7 +65,7 @@ function OpenedPost() {
 
   const getUniquePost = useCallback(async () => {
     const url = `/posts/${id}`;
-    const token = getUserInfo().token;
+    const token = user.accessToken;
 
     const res = await fetchData(url, "GET", token);
     if (res.status !== 200) navigate(-1);
@@ -74,13 +76,12 @@ function OpenedPost() {
 
   useEffect(() => {
     getUniquePost();
-    setCurrentUser(getUserInfo().user);
   }, []);
 
   const commentPost = async (content) => {
     const url = `/posts/${id}/comments`;
-    const token = getUserInfo().token;
-    const userId = getUserInfo().user._id;
+    const token = user.accessToken;
+    const userId = user._id;
     const data = {
       content: content,
       userId: userId,
@@ -116,7 +117,7 @@ function OpenedPost() {
     <div className="openedPost">
       <div className="">{post && <Post post={post} />}</div>
       <CommentPost onCommentPost={commentPost} onFocus={focused} onBlur={blured} />
-      <div className="flex flex-col mt-1">
+      <div className="flex flex-col mt-2">
         {entities.length > 0 && (
           <div className="">
             {entities.map((comment, index) => {
