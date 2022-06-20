@@ -6,6 +6,7 @@ function CommentPost({ onCommentPost, onFocus, onBlur }) {
   const handleCreatePost = async (e) => {
     e.preventDefault();
     onCommentPost(content);
+    setContent("");
   };
   return (
     <div className="comment-post w-100 px-2">

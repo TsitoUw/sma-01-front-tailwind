@@ -66,7 +66,7 @@ function LeftNav() {
             <p className="font-bold">Account</p>
           </div>
           <div className="about flex flex-col">
-            <NavLink to={`/profile/${user._id}`} className="my-1">
+            <div onClick={() => (window.location.href = `/profile/${user._id}`)} className="my-1">
               <div className="mx-2 md:mx-6 content flex items-center md:justify-start justify-center p-3">
                 <div className="picture rounded-full aspect-square w-5 h-5 md:w-7 md:h-7">
                   <img src={defaultPfp} alt={`${user.name} profile`} />
@@ -76,7 +76,7 @@ function LeftNav() {
                   <p className="mx-3 font-light w-16 md:w-18 lg:w-28  text-ellipsis overflow-hidden text-slate-400">{user.email}</p>
                 </div>
               </div>
-            </NavLink>
+            </div>
           </div>
         </div>
       </div>

@@ -24,11 +24,11 @@ function OpenedPost() {
   const [showToast, setShowToast] = useState(false);
   const [toastBody, setToastBody] = useState("");
   const [isWriting, setIsWriting] = useState(false);
-  const [forcedUpdate, setForcedUpdate] = useState(0);
+  const [update, setUpdate] = useState(0);
 
   if (!id || id.trim() === "") window.history.back();
 
-  const { loading, hasMore, error, entities } = usePaginate(forcedUpdate, `posts/${id}/comments`, page, limit, "asc");
+  let { loading, hasMore, error, entities: comments } = usePaginate(`posts/${id}/comments`, page, limit, "asc", update);
 
   const navigate = useNavigate();
   const commentEndRef = useRef();
@@ -76,7 +76,7 @@ function OpenedPost() {
 
   useEffect(() => {
     getUniquePost();
-  }, []);
+  }, [update]);
 
   const commentPost = async (content) => {
     const url = `/posts/${id}/comments`;
@@ -89,9 +89,8 @@ function OpenedPost() {
     const res = await fetchData(url, "POST", token, data);
     if (res.status !== 201) console.log("cannot comment");
     else {
-      // setForcedUpdate(forcedUpdate + 5);
-      // console.log(forcedUpdate);
-      window.location.reload();
+      socket.emit("commenting", id);
+      setUpdate((u) => u + 2);
     }
   };
 
@@ -101,6 +100,11 @@ function OpenedPost() {
 
   socket.on("is-not-writing", () => {
     setIsWriting(false);
+  });
+
+  socket.on("commented", () => {
+    console.log("someone commented");
+    setUpdate((u) => u + 2);
   });
 
   const focused = (e) => {
@@ -117,11 +121,12 @@ function OpenedPost() {
     <div className="openedPost">
       <div className="">{post && <Post post={post} />}</div>
       <CommentPost onCommentPost={commentPost} onFocus={focused} onBlur={blured} />
+      {isWriting && <div className="w-full text-slate-400 flex justify-center items-center animate-pulse">someone is writing...</div>}
       <div className="flex flex-col mt-2">
-        {entities.length > 0 && (
+        {comments.length > 0 && (
           <div className="">
-            {entities.map((comment, index) => {
-              if (entities.length === index + 1)
+            {comments.map((comment, index) => {
+              if (comments.length === index + 1)
                 return (
                   <div key={comment._id} ref={lastCommentEltRef}>
                     <Comment comment={comment} />
@@ -134,11 +139,6 @@ function OpenedPost() {
                   </div>
                 );
             })}
-            {isWriting && (
-              <div className="w-100 d-flex justify-content-center align-items-center pt-1">
-                someone is writing <span className="mx-2 spinner-grow spinner-grow-sm text-muted"></span>{" "}
-              </div>
-            )}
           </div>
         )}
         {loading && (
@@ -146,8 +146,8 @@ function OpenedPost() {
             <FontAwesomeIcon icon="circle-notch" size="lg" className="text-rose-400 mx-1 animate-spin" />
           </div>
         )}
-        {isWriting && entities.length < 1 && <div className="w-100 d-flex justify-content-center pt-1">someone is writing...</div>}
-        {entities.length < 1 && !loading && (
+
+        {comments.length < 1 && !loading && (
           <div className="w-full flex justify-center items-center p-5">
             <img src={noComments} alt="" width="200px" />
           </div>

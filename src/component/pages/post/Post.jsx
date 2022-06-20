@@ -8,8 +8,10 @@ import "./Post.css";
 import { networkConfig } from "../../../shared/networkConfig";
 import { comparedDate } from "../../../shared/date";
 import { UserContext } from "../../../shared/user.context";
+import { SocketContext } from "../../../shared/socket.context";
 
 function Post({ post }) {
+  const socket = useContext(SocketContext);
   const { user } = useContext(UserContext);
   const [isEditing, setIsEditing] = useState("");
   const [editId, setEditId] = useState("");
@@ -19,7 +21,8 @@ function Post({ post }) {
   const [createdAt, setCreatedAt] = useState("");
   const [liked, setLiked] = useState(false);
   const [likesCount, setLikesCount] = useState(0);
-  const [reload, setReload] = useState(2);
+  const [commentsCount, setCommentsCount] = useState(0);
+  const [update, setUpdate] = useState(2);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,13 +30,18 @@ function Post({ post }) {
     setPostedAt(comparedDate(post.createdAt));
     setCreatedAt(post.createdAt);
     setLikesCount(post.likes.length);
+    setCommentsCount(post.comments.length);
 
     return () => clearInterval();
-  }, [post]);
+  }, [post, update]);
 
   useEffect(() => {
     getThisPost();
-  }, [reload]);
+  }, [update]);
+
+  socket.on("someone-liked", () => {
+    setUpdate((u) => u + 5);
+  });
 
   const likeThis = async () => {
     setLiked((l) => !l);
@@ -41,8 +49,8 @@ function Post({ post }) {
     const data = { userId: id };
     const res = await fetchData(`/posts/${post._id}/like`, "PUT", user.accessToken, data);
     setLikesCount((c) => (c = res.data.likes.length));
-    console.log(res.data.likes.length);
-    setReload((r) => r + 1);
+    socket.emit("post-liked");
+    setUpdate((u) => u + 1);
   };
 
   const getThisPost = async () => {
@@ -113,8 +121,8 @@ function Post({ post }) {
   return (
     <div className="post px-2 py-1">
       <div className="bg-white flex flex-col rounded-lg">
-        <div className="head flex w-100 p-2">
-          <Link to={`/profile/${post.author._id}`} className="w-2/12 xl:w-1/12 flex justify-center items-center p-2">
+        <div className="head flex w-full p-2">
+          <Link to={`/profile/${post.author._id}`} className="w-2/12 xl:w-1/12 flex justify-center items-start p-2">
             <img
               src={
                 post.author.profilPicture === undefined || post.author.profilPicture === "none"
@@ -196,7 +204,7 @@ function Post({ post }) {
         )}
         {!isEditing && (
           <div className="w-full flex p-2">
-            <div
+            <button
               className={
                 liked
                   ? "w-4/12 text-rose-500 flex items-center justify-center border border-rose-500 px-4 py-1 rounded-lg mx-1 md:mx-2"
@@ -207,15 +215,14 @@ function Post({ post }) {
               }}
             >
               <FontAwesomeIcon icon={"heart"} className="p-1" /> {likesCount > 0 && <span className="mx-1 text-sm">{likesCount}</span>}
-            </div>
+            </button>
             <Link
               className="w-4/12  flex items-center justify-center border text-slate-400 border-slate-400 px-4 py-1 rounded-lg mx-1 md:mx-2  md:hover:border-rose-400 md:hover:text-rose-400"
               to={`/post/${post._id}`}
             >
-              <FontAwesomeIcon icon={"comment"} className="p-1" />{" "}
-              {post.comments && post.comments.length > 0 && <span className="mx-1 text-sm">{post.comments.length}</span>}
+              <FontAwesomeIcon icon={"comment"} className="p-1" /> {commentsCount > 0 && <span className="mx-1 text-sm">{commentsCount}</span>}
             </Link>
-            <div
+            <button
               className={
                 liked
                   ? "w-4/12 text-rose-500 flex items-center justify-center border border-rose-500 px-4 py-1 rounded-lg mx-1 md:mx-2"
@@ -226,7 +233,7 @@ function Post({ post }) {
               }}
             >
               <FontAwesomeIcon icon={"bookmark"} className="p-1" />{" "}
-            </div>
+            </button>
           </div>
         )}
       </div>

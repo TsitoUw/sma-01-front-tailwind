@@ -21,7 +21,7 @@ function Home() {
 
   const navigate = useNavigate();
 
-  const { loading, error, hasMore, entities } = usePaginate("posts", page, limit, "desc", update);
+  const { loading, error, hasMore, entities: posts } = usePaginate("posts", page, limit, "desc", update);
 
   const observer = useRef();
   const lastPostEltRef = useCallback(
@@ -69,14 +69,14 @@ function Home() {
         <div className="content ">
           <CreatePost onCreatePost={handleCreatePost} onUpdate={setUpdate} placeHolder={"Share your thought"} />
           <div className="post">
-            {entities.length < 1 && !loading && (
+            {posts.length < 1 && !loading && (
               <div className="flex justify-center items-center">
                 <img src={noPostSvg} alt="" width="350px" className="p-20" />
               </div>
             )}
-            {entities.length > 0 &&
-              entities.map((post, index) => {
-                if (entities.length === index + 1)
+            {posts.length > 0 &&
+              posts.map((post, index) => {
+                if (posts.length === index + 1)
                   return (
                     <div key={post._id} ref={lastPostEltRef}>
                       <Post post={post} />

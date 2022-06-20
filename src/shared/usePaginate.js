@@ -11,7 +11,6 @@ export default function usePaginate(entity = "posts", pageNumber = 1, limit = 8,
 
   useEffect(() => {
     setLoading(true);
-    setEntities([]);
     let cancel;
     axios({
       method: "GET",
